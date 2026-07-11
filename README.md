@@ -23,11 +23,30 @@ Early stage — research program and architecture defined, model formalization i
 
 ## Setup
 
+Tooling is driven by [uv](https://docs.astral.sh/uv/) (no system `pip` needed); it
+provisions Python 3.12 and all dependencies on a clean machine.
+
 ```bash
-make setup   # venv + dependencies
-make test    # pytest
-make lint    # ruff
+make setup    # uv sync: create .venv, install deps + the sim package (writes uv.lock)
+make test     # pytest (sim/tests) -- passes with zero tests during scaffolding
+make lint     # ruff check
+make format   # ruff format
+make ci       # local gate: lint + test (run before committing)
+make clean    # remove .venv and caches
 ```
+
+## Layout
+
+```
+sim/core/        opportunities, agent populations, capture race, main dynamics
+sim/strategies/  three interchangeable rationality levels + richer strategies
+sim/metrics/     pi (market/total), Gini, niche lifetimes, early-warning indicators
+sim/experiments/ configs (one YAML per experiment) + multi-seed runner
+sim/analysis/    phase-boundary / hysteresis detection, publication figures
+sim/tests/       V1 analytic, V2 sanity (non-tautology), V3 invariance
+```
+
+See `docs/simulation-architecture.md` for the rationale behind each module.
 
 ## License
 
