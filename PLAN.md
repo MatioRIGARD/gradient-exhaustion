@@ -8,7 +8,7 @@
 
 ---
 
-## Phase 0 — Fondations (≈ 1-2 semaines calendaire)
+## Phase 0 — Fondations (≈ 1-2 sessions agent)
 
 | ID | Tâche | Livrable | Critères d'acceptation | Qui |
 |---|---|---|---|---|
@@ -17,14 +17,14 @@
 | T0.3 | **Setup du repo.** pyproject.toml (Python 3.12, numpy, scipy, matplotlib, pytest, ruff), Makefile (`setup`, `test`, `lint`, `format`), CI locale simple, arborescence `sim/` conforme à `docs/simulation-architecture.md` §4 (fichiers vides + docstrings). | Repo qui passe `make test` (0 tests) et `make lint` | Commandes documentées dans le README ; `make setup` fonctionne sur machine vierge | 🤖 |
 | **GATE 0** | **Décision : le terrain est-il libre ?** Si T0.2 révèle qu'une équipe a déjà publié un modèle formel équivalent → pivot (répliquer + étendre au lieu de créer). Sinon, continuer. | | | 👤 |
 
-## Phase 1 — L'indice π (≈ 1 semaine)
+## Phase 1 — L'indice π (≈ 1 session agent + relecture)
 
 | ID | Tâche | Livrable | Critères d'acceptation | Qui |
 |---|---|---|---|---|
 | T1.1 | **Draft de la définition de π** (participation économique humaine). Traiter explicitement Q2 et Q3 de `docs/research-program.md` §2 : que compte-t-on (revenu de capture, travail, transferts — séparés en π_marché / π_total), pourquoi ces choix, quelles données réelles existantes s'en approchent (labor share, etc.). Inclure 3 définitions alternatives rejetées avec raisons. | `docs/pi-definition.md` (2-3 pages) | π est calculable dans le modèle ET approximable dans des données réelles ; les cas ambigus (UBI, humain assisté par IA, actionnaire passif) sont tous tranchés | 🤖+👤 |
 | T1.2 | **Relecture externe du draft** : envoyer `pi-definition.md` (traduit en anglais par l'agent) à 1-2 personnes de `background.md` §3 avec un message court. Objectif secondaire : premier contact avec la communauté. | Email/DM envoyé | Message parti (la réponse n'est pas bloquante pour la suite) | 👤 |
 
-## Phase 2 — Modèle minimal analytique (≈ 3-6 semaines) — **le cœur du projet**
+## Phase 2 — Modèle minimal analytique (≈ 1-2 semaines — incompressible sous ~1 semaine : les passes de vérification doivent être espacées et faites par des sessions fraîches) — **le cœur du projet**
 
 | ID | Tâche | Livrable | Critères d'acceptation | Qui |
 |---|---|---|---|---|
@@ -34,7 +34,7 @@
 | T2.4 | **Test anti-tautologie du modèle.** Rédiger la liste des hypothèses A1-An avec, pour chacune : « si on la retire, la conclusion tient-elle ? ». Identifier celles qui portent la conclusion. | Section « robustesse » de `model-notes.md` | Aucune hypothèse du type « les humains ne peuvent pas X » sans justification empirique ; la conclusion ne repose pas sur une seule hypothèse fragile | 🤖+👤 |
 | **GATE 2** | **Décision K1 (`research-program.md` §4) : le mécanisme sort-il du modèle sans être forcé ?** Si non → retravailler le diagnostic avant toute simulation. Si oui → optionnel mais recommandé : publier dès maintenant un post court Alignment Forum avec le modèle minimal (occupe le terrain, récolte du feedback, date l'antériorité). | | | 👤 |
 
-## Phase 3 — Simulation v1 (≈ 6-10 semaines)
+## Phase 3 — Simulation v1 (≈ 1-2 semaines en sessions agent)
 
 Suivre `docs/simulation-architecture.md` (architecture, principes anti-tautologie, populations vectorisées numpy). Ordre strict : les tests de validation V1-V3 **avant** toute expérience.
 
@@ -51,7 +51,7 @@ Suivre `docs/simulation-architecture.md` (architecture, principes anti-tautologi
 | T3.9 | `sim/metrics/indices.py` : π_marché, π_total (selon `docs/pi-definition.md`), Gini, durée de vie des niches, indicateurs d'alerte précoce (variance glissante, autocorrélation lag-1) | Module + tests | π implémenté exactement comme défini en T1.1 (traçabilité doc ↔ code) | 🤖 |
 | **GATE 3** | Revue complète : V1-V3 verts sur les 3 niveaux de rationalité ; relecture du cœur par un second agent en mode adversarial (« trouve le terme qui force la conclusion ») | | | 👤 (orchestration) |
 
-## Phase 4 — Expériences et figures (≈ 3-5 semaines)
+## Phase 4 — Expériences et figures (≈ 1 semaine : runs en heures, analyse en sessions)
 
 Protocole détaillé : `docs/simulation-architecture.md` §3.2. Une tâche = une expérience = une figure.
 
@@ -66,7 +66,7 @@ Protocole détaillé : `docs/simulation-architecture.md` §3.2. Une tâche = une
 | T4.6 | E6 → F6 (early warnings sur les trajectoires d'E3) | idem | Indicateurs calculés AVANT le point de bascule uniquement | 🤖 |
 | **GATE 4** | **Décision K2 : y a-t-il un seuil ?** Oui → papier « transition de phase ». Non → repositionner sur « déclin graduel : conditions et paramètres » (toujours publiable). Vérifier K3/K4 à la lumière des données empiriques disponibles. | | | 👤 |
 
-## Phase 5 — Article et publication (≈ 3-4 semaines)
+## Phase 5 — Article et publication (≈ 1-2 semaines + latences extérieures incompressibles : réponses des contacts, endorsement arXiv, commentaires AF)
 
 | ID | Tâche | Livrable | Critères d'acceptation | Qui |
 |---|---|---|---|---|
