@@ -8,7 +8,7 @@
 
 **Question.** Comment π traite-t-il un humain vivant des dividendes d'une firme-IA sans l'opérer ?
 
-**Décision.** Option « hors boucle » : le revenu de capital passif ne compte ni dans π_marché ni dans le canal travail/capture. Il est compté dans π_total (canal perfusion) **et reporté en série de sortie séparée** dans toutes les expériences (distinct des transferts publics type UBI), afin que la question « la propriété du capital IA protège-t-elle ? » reste analysable dans les figures.
+**Décision.** Option « hors boucle » : le revenu de capital passif ne compte ni dans π_marché ni dans le canal travail/capture. Il est **reporté en série de sortie séparée ρ** dans toutes les expériences (distinct des transferts publics type UBI) et **tenu hors des indices de tête** — ni dans π_marché, ni fusionné dans Δ, pour laisser π_marché/π_total/Δ inchangés. Une lecture étendue π_total⁺ = π_total + ρ reste disponible pour tester l'hypothèse, afin que la question « la propriété du capital IA protège-t-elle ? » reste analysable dans les figures.
 
 **Justification.** (a) π mesure la *participation* — être nécessaire au flux — pas les *droits sur* le flux ; un claim passif n'a de valeur que si des institutions l'exécutent, ce qui est précisément la variable que le diagnostic interroge (cadrage rentier de l'Intelligence Curse). (b) Anti-tautologie : c'est un choix de *classification des flux*, pas une règle du modèle — les humains peuvent posséder du capital IA dans la simulation, et le reporting séparé permet de *montrer* empiriquement le destin des mondes « actionnaires » au lieu de le décréter par définition. (c) Correspondance données réelles conservée : le revenu de capital des ménages est mesuré dans les comptes nationaux.
 
