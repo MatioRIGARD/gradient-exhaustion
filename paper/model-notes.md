@@ -147,5 +147,10 @@ This gives ABM experiment E3 a sharp analytic prediction: hysteresis loop width 
 | Numeric Monte-Carlo check of §2 (capture shares, threshold, linear π) | ✅ PASS (C1-C3, 12 checks) | 2026-07-13 | `sim/analysis/analytic_check.py` |
 | Numeric ODE check of §3 ($t^*$, post-exclusion fixed point, decay when $\gamma<0$) | ✅ PASS (C4, 5 checks) | 2026-07-13 | idem |
 | Numeric check of §4 (two thresholds, loop width $\propto 1-\beta$) | ✅ PASS (C5, 2 checks) | 2026-07-13 | idem |
-| Independent re-derivation of §2-§3 from §1 alone (fresh agent, no access to these results) | ☐ pending | | comparison note to be appended |
+| Independent re-derivation of §2-§3 from §1 alone (fresh agent, no access to these results) | ✅ PASS | 2026-07-13 | `paper/rederivation-blind.md` — **all formulas match symbol for symbol** (threshold, linear π, γ criterion, $t^*$, fixed point, hysteresis width $(1-\beta)S$, permanent-trap condition $\beta < \theta/S$), including the observation that $\Lambda_a^{**} > \bar\Lambda \iff \gamma > 0$. Three substantive flags raised, incorporated as A4′/A9 and the §5 welfare note |
 | Adversarial review of §5 audit | ☐ pending | | fresh session, next day |
+
+**Flags from the blind re-derivation (incorporated):**
+- **(A4′) Unbounded concurrency**: linearity of income in $\Lambda_h$ assumes no per-agent capacity limit on simultaneous races. Added to audit; ABM can impose capacity caps.
+- **(A9) Gross-vs-net reinvestment asymmetry**: free entry drives humans to zero *net* rent (nothing to reinvest), while the AI side reinvests *gross* income with only depreciation as a brake and no zero-profit discipline. This is a modeling choice to defend: it is exactly what operator competition would erode — **E4's question**. If competition among AI operators dissipates their rents the way free entry dissipates human rents, the effective $\eta$ falls and the coexistence region grows.
+- **Welfare caveat**: $\pi_{\text{market}}$ is a share of *gross earned flow*, not welfare — human net surplus is already zero throughout the interior regime. The paper must not read $\pi > 0$ as "humans are fine"; $\pi$ measures presence in the loop, per `docs/pi-definition.md`.

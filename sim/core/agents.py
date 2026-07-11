@@ -1,7 +1,120 @@
 """Agent populations held as numpy arrays (no per-agent objects).
 
 Two economic species differing ONLY by parameter values, never by special rules
-(anti-tautology rule #1): humans have fixed latency/information cost and capped
-capacity; AI operators have latency and cost that decrease with reinvestment.
-See docs/simulation-architecture.md §2.2. Implemented in T3.2.
+(anti-tautology rule #1). Both populations expose the same interface: a detection
+intensity brought to each opportunity's race (possibly zero when the opportunity's
+difficulty exceeds an agent's capability ceiling) and an income account. What
+differs is parameter structure: humans have fixed (mu, cost, ceiling) and decide
+participation by entry/exit; AI operators compound intensity through reinvestment
+(eta, delta) — the load-bearing asymmetry A7 of model-notes.md, expressed as
+parameters, not rules.
 """
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+import numpy as np
+
+
+@dataclass
+class HumanPopulation:
+    """Potential human participants; `active` marks current entrants.
+
+    Entry/exit is a local rule (A5 relaxed to finite rates): agents observe the
+    realized per-capita earned income of incumbents (EMA) and compare it to their
+    participation cost. No agent ever consults the analytic solution.
+    """
+
+    mu: np.ndarray  # per-agent detection intensity
+    cost: np.ndarray  # per-agent participation cost flow
+    ceiling: np.ndarray  # max difficulty the agent can exploit
+    active: np.ndarray  # bool
+    income_ema: float = 0.0  # per-capita earned income of incumbents (flow)
+    ema_rate: float = 4.0  # EMA rate per unit time
+    entry_rate: float = 50.0  # expected entries per unit time when profitable
+    exit_rate: float = 50.0  # expected exits per unit time when unprofitable
+
+    @classmethod
+    def homogeneous(cls, n_pool: int, mu: float, cost: float, ceiling: float = np.inf):
+        return cls(
+            mu=np.full(n_pool, mu),
+            cost=np.full(n_pool, cost),
+            ceiling=np.full(n_pool, ceiling),
+            active=np.zeros(n_pool, dtype=bool),
+        )
+
+    @property
+    def n_active(self) -> int:
+        return int(self.active.sum())
+
+    def intensity_for(self, difficulty: np.ndarray) -> np.ndarray:
+        """Total active human intensity eligible for each opportunity."""
+        act_mu = self.mu[self.active]
+        act_ceil = self.ceiling[self.active]
+        if act_mu.size == 0:
+            return np.zeros_like(difficulty)
+        order = np.argsort(act_ceil)
+        sorted_ceil = act_ceil[order]
+        csum = np.concatenate([[0.0], np.cumsum(act_mu[order])])
+        first_ok = np.searchsorted(sorted_ceil, difficulty, side="left")
+        return csum[-1] - csum[first_ok]
+
+    def pick_winner(self, difficulty: float, rng: np.random.Generator) -> int:
+        """Sample the capturing agent among eligible actives, proportional to mu."""
+        idx = np.flatnonzero(self.active & (self.ceiling >= difficulty))
+        w = self.mu[idx]
+        return int(rng.choice(idx, p=w / w.sum()))
+
+    def update_signal(self, earned_flow: float, dt: float) -> None:
+        n = max(1, self.n_active)
+        a = min(1.0, self.ema_rate * dt)
+        self.income_ema += a * (earned_flow / n - self.income_ema)
+
+    def entry_exit(self, rng: np.random.Generator, dt: float) -> None:
+        """Local adjustment toward zero net income (finite-rate free entry)."""
+        mean_cost = float(self.cost.mean())
+        if self.income_ema > mean_cost:
+            candidates = np.flatnonzero(~self.active)
+            n_in = min(candidates.size, rng.poisson(self.entry_rate * dt))
+            if n_in > 0:
+                self.active[rng.choice(candidates, n_in, replace=False)] = True
+        elif self.income_ema < mean_cost:
+            incumbents = np.flatnonzero(self.active)
+            n_out = min(incumbents.size, rng.poisson(self.exit_rate * dt))
+            if n_out > 0:
+                self.active[rng.choice(incumbents, n_out, replace=False)] = False
+
+
+@dataclass
+class AIPopulation:
+    """AI operators: intensity compounds with reinvested income (A7)."""
+
+    lam: np.ndarray  # per-operator detection intensity
+    eta: np.ndarray  # income -> capability conversion rate
+    delta: np.ndarray  # capability depreciation rate
+    ceiling: np.ndarray = field(default_factory=lambda: np.empty(0))
+
+    @classmethod
+    def single(cls, lam0: float, eta: float, delta: float, ceiling: float = np.inf):
+        return cls(
+            lam=np.array([lam0]),
+            eta=np.array([eta]),
+            delta=np.array([delta]),
+            ceiling=np.array([ceiling]),
+        )
+
+    def intensity_for(self, difficulty: np.ndarray) -> np.ndarray:
+        order = np.argsort(self.ceiling)
+        csum = np.concatenate([[0.0], np.cumsum(self.lam[order])])
+        first_ok = np.searchsorted(self.ceiling[order], difficulty, side="left")
+        return csum[-1] - csum[first_ok]
+
+    def pick_winner(self, difficulty: float, rng: np.random.Generator) -> int:
+        idx = np.flatnonzero(self.ceiling >= difficulty)
+        w = self.lam[idx]
+        return int(rng.choice(idx, p=w / w.sum()))
+
+    def reinvest(self, income_per_operator: np.ndarray, dt: float) -> None:
+        self.lam += dt * (self.eta * income_per_operator - self.delta * self.lam)
+        np.clip(self.lam, 0.0, None, out=self.lam)
