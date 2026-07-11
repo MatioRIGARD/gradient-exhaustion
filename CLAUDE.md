@@ -11,6 +11,7 @@ Recherche scientifique : **modéliser l'éviction des humains de la boucle écon
 - `PLAN.md` — **commence ici** : plan en phases/tâches (T0.1 → T5.5) avec critères d'acceptation. Exécuter UNE tâche à la fois, celle que Mathieu demande.
 - `docs/background.md` — contexte scientifique, état de l'art, contacts, lectures. ⚠️ = référence à vérifier avant citation.
 - `docs/research-program.md` — le diagnostic à valider (D1/D2), les 7 questions (Q1-Q7), les critères d'abandon (K1-K4).
+- `docs/decisions.md` — journal des arbitrages de design + heuristiques pour trancher. **À consulter avant de poser une question d'arbitrage à Mathieu.**
 - `docs/simulation-architecture.md` — architecture cible du code (`sim/`), protocole expérimental (V1-V3, E1-E6, figures F1-F6).
 - `paper/paper.md` — squelette de l'article (anglais).
 - `research/raw/` — notes de recherche brutes (sources à revérifier avant citation).
