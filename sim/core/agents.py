@@ -21,19 +21,28 @@ import numpy as np
 class HumanPopulation:
     """Potential human participants; `active` marks current entrants.
 
-    Entry/exit is a local rule (A5 relaxed to finite rates): agents observe the
-    realized per-capita earned income of incumbents (EMA) and compare it to their
-    participation cost. No agent ever consults the analytic solution.
+    Entry/exit is a local rule (A5 relaxed to finite rates). Each participant
+    keeps its own account: it enters with a grubstake (patience * cost), pays
+    its participation cost continuously, credits its own captures, and exits
+    when its account is exhausted (bankruptcy). Capture income arrives in rare
+    lumps, so exits must be patient rather than signal-triggered — otherwise
+    noise rectification empties the market even at profitable parameters.
+    Entry combines signal-independent exploration (which keeps re-entry
+    possible from an empty market: an absorbing zero-participation state would
+    be a construction artefact) with imitation proportional to the observed
+    excess income of incumbents. No agent ever consults the analytic solution.
     """
 
     mu: np.ndarray  # per-agent detection intensity
     cost: np.ndarray  # per-agent participation cost flow
     ceiling: np.ndarray  # max difficulty the agent can exploit
     active: np.ndarray  # bool
-    income_ema: float = 0.0  # per-capita earned income of incumbents (flow)
-    ema_rate: float = 4.0  # EMA rate per unit time
-    entry_rate: float = 50.0  # expected entries per unit time when profitable
-    exit_rate: float = 50.0  # expected exits per unit time when unprofitable
+    wealth: np.ndarray  # per-agent account while active
+    patience: float = 8.0  # grubstake in units of (cost * time)
+    income_ema: float = 0.0  # smoothed per-capita earned income of incumbents
+    ema_rate: float = 1.0  # EMA rate per unit time
+    entry_rate: float = 50.0  # imitation entries per unit time at 100% excess income
+    explore_rate: float = 5.0  # signal-independent probing entries per unit time
 
     @classmethod
     def homogeneous(cls, n_pool: int, mu: float, cost: float, ceiling: float = np.inf):
@@ -42,6 +51,7 @@ class HumanPopulation:
             cost=np.full(n_pool, cost),
             ceiling=np.full(n_pool, ceiling),
             active=np.zeros(n_pool, dtype=bool),
+            wealth=np.zeros(n_pool),
         )
 
     @property
@@ -66,24 +76,53 @@ class HumanPopulation:
         w = self.mu[idx]
         return int(rng.choice(idx, p=w / w.sum()))
 
-    def update_signal(self, earned_flow: float, dt: float) -> None:
-        n = max(1, self.n_active)
+    def credit(self, agent_idx: int, value: float) -> None:
+        """Add capture income, capped at the grubstake: agents maintain a
+        working buffer and consume the surplus (otherwise past luck banks
+        into unbounded exit lags and the free-entry equilibrium blurs)."""
+        cap = self.patience * self.cost[agent_idx]
+        self.wealth[agent_idx] = min(self.wealth[agent_idx] + value, cap)
+
+    def update_signal(self, expected_flow: float, dt: float) -> None:
+        """Entry signal = a prospective entrant's expected capture flow.
+
+        Races are memoryless, so an agent with intensity mu expects to capture
+        value at rate mu * (total value of currently open opportunities) —
+        market thickness, a public and slowly-varying statistic. Competition
+        enters through pool depletion, not through observing rivals' incomes;
+        this keeps the signal finite and stampede-free at any headcount. No
+        analytic solution is consulted: the free-entry correspondence is
+        emergent."""
         a = min(1.0, self.ema_rate * dt)
-        self.income_ema += a * (earned_flow / n - self.income_ema)
+        self.income_ema += a * (expected_flow - self.income_ema)
+
+    def activate(self, idx: np.ndarray) -> None:
+        self.active[idx] = True
+        self.wealth[idx] = self.patience * self.cost[idx]
 
     def entry_exit(self, rng: np.random.Generator, dt: float) -> None:
-        """Local adjustment toward zero net income (finite-rate free entry)."""
+        """Symmetric signal response + exploration + bankruptcy backstop.
+
+        Entries and voluntary exits respond at the same rate to the signed
+        gap between the entry signal and the participation cost; a convex
+        (entries-only) response would rectify signal noise into a permanent
+        over-participation bias. Bankruptcy remains as the hard backstop.
+        """
+        self.wealth[self.active] -= self.cost[self.active] * dt
+        self.active &= self.wealth > 0.0
+
         mean_cost = float(self.cost.mean())
-        if self.income_ema > mean_cost:
-            candidates = np.flatnonzero(~self.active)
-            n_in = min(candidates.size, rng.poisson(self.entry_rate * dt))
-            if n_in > 0:
-                self.active[rng.choice(candidates, n_in, replace=False)] = True
-        elif self.income_ema < mean_cost:
+        gap = (self.income_ema - mean_cost) / mean_cost
+        if gap < 0.0:
             incumbents = np.flatnonzero(self.active)
-            n_out = min(incumbents.size, rng.poisson(self.exit_rate * dt))
+            n_out = min(incumbents.size, rng.poisson(self.entry_rate * min(1.0, -gap) * dt))
             if n_out > 0:
                 self.active[rng.choice(incumbents, n_out, replace=False)] = False
+        rate_in = self.explore_rate + self.entry_rate * min(1.0, max(0.0, gap))
+        candidates = np.flatnonzero(~self.active)
+        n_in = min(candidates.size, rng.poisson(rate_in * dt))
+        if n_in > 0:
+            self.activate(rng.choice(candidates, n_in, replace=False))
 
 
 @dataclass

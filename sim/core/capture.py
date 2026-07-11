@@ -66,6 +66,7 @@ def run_races(
     for i, k in zip(idx, kind, strict=True):
         v, diff = float(opps.value[i]), float(opps.difficulty[i])
         if k == HUMAN:
+            humans.credit(humans.pick_winner(diff, rng), v)
             out.human_income += v
             out.n_human_captures += 1
         elif k == AI:
