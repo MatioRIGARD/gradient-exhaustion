@@ -149,6 +149,7 @@ This gives ABM experiment E3 a sharp analytic prediction: hysteresis loop width 
 | Numeric check of §4 (two thresholds, loop width $\propto 1-\beta$) | ✅ PASS (C5, 2 checks) | 2026-07-13 | idem |
 | Independent re-derivation of §2-§3 from §1 alone (fresh agent, no access to these results) | ✅ PASS | 2026-07-13 | `paper/rederivation-blind.md` — **all formulas match symbol for symbol** (threshold, linear π, γ criterion, $t^*$, fixed point, hysteresis width $(1-\beta)S$, permanent-trap condition $\beta < \theta/S$), including the observation that $\Lambda_a^{**} > \bar\Lambda \iff \gamma > 0$. Three substantive flags raised, incorporated as A4′/A9 and the §5 welfare note |
 | Adversarial review of §5 audit | ☐ pending | | fresh session, next day |
+| ABM reproduces §2-§3 (V1 anchor: free-entry level, linear π, exclusion, $t^*$) | ✅ PASS (6/6 tests) | 2026-07-13 | `sim/tests/test_analytic.py`; tolerances 8-35% as stated per test |
 
 **Flags from the blind re-derivation (incorporated):**
 - **(A4′) Unbounded concurrency**: linearity of income in $\Lambda_h$ assumes no per-agent capacity limit on simultaneous races. Added to audit; ABM can impose capacity caps.

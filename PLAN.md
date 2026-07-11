@@ -8,6 +8,18 @@
 
 ---
 
+## État d'avancement (2026-07-13, nuit de drive Fable)
+
+- ✅ **Phase 0** complète (T0.1-T0.3, GATE 0 franchie : terrain libre).
+- ✅ **T1.1** (définition de π, DEC-001 tranché) ; **T1.2** : brouillons prêts dans `docs/outreach-emails.md` → **à envoyer par Mathieu**.
+- ✅ **T2.1-T2.3** : modèle formalisé et résolu (`paper/model-notes.md`) — seuil d'exclusion Λ̄, critère γ, temps t*, hystérésis ∝ (1−β). **Triple vérification** : dérivation + 18 checks numériques (`sim/analysis/analytic_check.py`) + contre-dérivation aveugle par agent indépendant (`paper/rederivation-blind.md`) — concordance totale.
+- 🟡 **T2.4** : premier passage fait (audit A1-A9 dans model-notes §5) ; **reste la relecture adversariale par session fraîche** avant de considérer la phase 2 close.
+- ✅ **T3.1-T3.4** : cœur du simulateur + ancre analytique V1 (6/6 tests). Leçons de conception documentées dans les docstrings (signal d'épaisseur de marché, comptabilité par agent avec patience, réponse symétrique anti-rectification).
+- ⬜ Reste phase 3 : T3.5 (V2 sanity), T3.6 (V3 invariances), T3.7 (3 niveaux de rationalité), T3.8 (stratégies riches), T3.9 (métriques π).
+- 🔲 **GATE 2 : dossier prêt (`docs/gate2-dossier.md`), décision à Mathieu.**
+
+---
+
 ## Phase 0 — Fondations (≈ 1-2 sessions agent)
 
 | ID | Tâche | Livrable | Critères d'acceptation | Qui |
