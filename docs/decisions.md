@@ -54,6 +54,14 @@
 
 ---
 
+## E7 (extension v2, issue de l'objection de Mathieu du 13/07) — compétition juridictionnelle
+
+**Objection** : tout levier de politique (taxe E5, régulation) appliqué unilatéralement crée un avantage compétitif pour ceux qui ne l'appliquent pas — c'est le diagnostic AGORA original (équilibre de Nash entre États), qui s'applique maintenant AUX REMÈDES du modèle : *les leviers exigent une coordination que la structure compétitive détruit* (le piège au carré).
+
+**Extension à modéliser (E7)** : deux juridictions, taux de taxe τ₁ ≠ τ₂, capacité IA mobile (migration vers le moins-disant, avec friction paramétrée), gradients partiellement globaux/captifs. Prédictions à pré-enregistrer avant implémentation : (a) la course au moins-disant reproduit l'équilibre sans taxe quand la mobilité est libre ; (b) la taxe ne mord que sur la part de gradients captifs (non délocalisables) ; (c) la taxation coordonnée (τ commun) reproduit E5. Le paragraphe « chaque levier est soumis à la course qu'il freine » va dans la discussion du papier long.
+
+---
+
 ## Comment trancher les prochains arbitrages (heuristiques, dans l'ordre)
 
 1. **Anti-tautologie d'abord** : rejeter toute option qui transforme la conclusion en définition (dans un sens ou dans l'autre). En cas de doute : la distinction va dans une *définition de mesure* + une *série de sortie* qui garde l'alternative observable — jamais dans une règle du modèle.
