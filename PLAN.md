@@ -25,7 +25,7 @@
 - ✅ **T3.7** : règles de décision interchangeables — replicator (ancre V1) + best_response validées (tests) ; niveau « learning » implémenté mais descopé honnêtement (inférence individuelle non informative en régime d'income lumpy — voir docstring ; suivi).
 - ✅ **T3.8** : redistribution (taxe τ→transferts, DEC-002 câblé : la demande reçoit capture+transferts), dissipation de rentes entre opérateurs, drapeau collusion. π_total implémenté.
 - ✅ **E5 et E4b** (prédictions 13/07c pré-enregistrées, toutes confirmées) : la redistribution ne préserve la participation qu'à taux quasi confiscatoire (τ*≈0.92 ; π_total=τ exactement après exclusion) ; la concurrence entre IA ne protège qu'à dissipation quasi totale (ρ*≈0.97) et **la collusion éteint exactement la protection**. Figures F5, F4b.
-- �Ⓝ **E6 première passe négative** (pas d'early warnings détectables avec l'estimateur naïf) — documenté, à retravailler, ne pas revendiquer dans le papier.
+- ⚠️ **E6 première passe négative** (pas d'early warnings détectables avec l'estimateur naïf) — documenté, à retravailler, ne pas revendiquer dans le papier.
 - ⬜ Restent : densification n≥30 (cosmétique papier), E3.8, E6 retravaillé, calibration du niveau learning, balayage β×K ; puis phase 5 (papier long, LaTeX, arXiv). Le post AF est prêt et n'attend rien de tout ça.
 
 ---
