@@ -28,6 +28,31 @@
 
 ---
 
+## DEC-003 — Le canal λ est scindé : préférence vs mandat (2026-07-13)
+
+**Question (issue de la discussion des six questions avec Mathieu).** Les « métiers réservés aux humains » recouvrent deux réalités économiques différentes : (a) tâches pour lesquelles la demande *veut* de l'humain (soin, artisanat d'art — willingness-to-pay réelle) ; (b) tâches imposées par la règle alors qu'elles sont fonctionnellement automatisables (« fonctionnaires de l'IA », signatures obligatoires).
+
+**Décision.** À partir de T3.8, le canal λ est scindé :
+- **λ_pref** (préférence) : demande volontaire pour de l'humain → compte dans π_marché. Critère : un acteur privé paierait volontairement.
+- **λ_mandat** (mandat) : imposé par la règle → **transfert déguisé en métier** (couper le poste ne casse rien de fonctionnel, seule la règle casse) → reporté à part, économiquement rangé avec Δ, pas dans π_marché. Même test d'auto-exécution que DEC-001/002.
+
+**Note structurelle sur λ_pref** : la demande pour λ_pref émane presque exclusivement d'humains (l'IA n'achète pas d'artisanat) → c'est de la **circulation interne** du revenu humain existant, un multiplicateur, pas une source. λ_pref ne peut pas soutenir π seul ; le simulateur doit brancher sa demande sur le revenu humain disponible (cohérent avec DEC-002).
+
+**Conséquence papier** : la discussion doit traiter les « niches légales » comme politique de redistribution avec les mêmes propriétés de fragilité institutionnelle que les transferts directs.
+
+---
+
+## Priors de Mathieu sur les six questions ouvertes (2026-07-13, à pré-enregistrer comme prédictions là où testable)
+
+1. **Centaure** : au-delà d'un seuil d'intelligence IA, l'humain augmenté n'est plus compétitif ; la variable est le capital possédé. (→ soutient la variante « η sur capital levé », cf. questions-simples Q5.)
+2. **Rigidité/demande** : scénario lent et insidieux ; les gouvernements apaisent par transferts → exclusion progressive des sans-capital, pas d'effet de seuil brutal. (→ E5 : transferts endogènes financés par taxe sur opérateurs = frein endogène sur η ; à pré-enregistrer.)
+3. **Nouvelles niches** : automatisées immédiatement sous AGI. (Prior noté ; reste un paramètre balayé — ne pas encoder.)
+4. **Niches légales** : poids mort, « fonctionnaires de l'IA ». (→ DEC-003.)
+5. **Valeur** : les poids de modèles sont copiables (cf. open source) ; la valeur est dans l'infra, la donnée, les process → les « opérateurs » du modèle sont les industriels couplant capital propriétaire et IA, pas les labs. La couche modèles subit la dissipation de rentes (E4) ; la composition se déplace vers le capital complémentaire.
+6. **Économie machine-machine** : sans objectif programmé, pas de moteur — correction actée en discussion : **la sélection remplace l'intention** (les opérateurs qui réinvestissent survivent). Paradoxe relevé par Mathieu à garder pour la discussion du papier : un opérateur aligné sur la prospérité humaine devrait s'auto-limiter en γ — l'alignement comme retenue économique sous pression concurrentielle.
+
+---
+
 ## Comment trancher les prochains arbitrages (heuristiques, dans l'ordre)
 
 1. **Anti-tautologie d'abord** : rejeter toute option qui transforme la conclusion en définition (dans un sens ou dans l'autre). En cas de doute : la distinction va dans une *définition de mesure* + une *série de sortie* qui garde l'alternative observable — jamais dans une règle du modèle.
