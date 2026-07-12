@@ -54,6 +54,14 @@ The preliminary run refuted E3.4 for *linear* demand coupling. The production E3
 - **E3.7** — as n grows large the loop width approaches the two-state value (1−β)S from below.
 - **E3.8** — permanent trap (no re-entry at Λ_a=0) for β < θ/S at high n, absent at n linear.
 
+## ADDENDUM 2026-07-13b (pre-registered BEFORE the K-confirmation runs, AFTER the exploratory K finding of notes-production-v1.md)
+
+The exploratory pass (seeds 0-2, ramp legs 300) found the hysteresis driver to be the demand response's half-response point K, not its steepness. Confirmation protocol: **fresh seeds 100-109 (10 seeds), ramp legs 600 (half the ramp speed), β=0.6, n=8**. Predictions:
+
+- **E3.9** — gap(K=0.05) ∈ [0.6, 1.4] and strictly positive at 95% confidence.
+- **E3.10** — gap(linear) ∈ [−0.3, +0.3] (compatible with zero).
+- **E3.11** — gap(K=0.05) − gap(linear) > 0.4 with non-overlapping 95% CIs.
+
 ## Out of scope of these predictions
 
 Labor channel (λ), transfers (T), Goodhart on π, heterogeneous difficulties with human ceilings (the "front" prediction of A4 audit: exclusion proceeds skill-band by skill-band) — to be pre-registered when T3.8+ lands, before their experiments run.
