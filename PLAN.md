@@ -19,7 +19,9 @@
 - ✅ **Relecture adversariale** faite (`paper/adversarial-review-model.md`) : verdict « publiable après corrections » — **les 7 corrections sont appliquées** dans model-notes rev. 2. Statut épistémique acté : §2-3 (exclusion) émergent et vérifié ; §4 (cliquet) conditionnel à A8, présenté comme tel.
 - ✅ **E3 préliminaire** (`sim/analysis/notes-preliminary-e3.md`) : E3.4 INFIRMÉE pour couplage linéaire — l'hystérésis exige une demande non-linéaire/rigide ; l'exclusion, elle, tient (et arrive plus tôt). À intégrer au design d'E3 production.
 - ✅ **GATE 2 : FRANCHIE le 13/07/2026** (délégué par Mathieu, conditions du dossier remplies : relecture adversariale passée, corrections appliquées). Périmètre de publication acté : §2-3 en résultat principal, §4 en résultat conditionnel avec la découverte E3-préliminaire.
-- ⬜ Reste phase 3 : T3.7 (3 niveaux de rationalité), T3.8 (stratégies riches). Puis phase 4 (P7 de `docs/prompts-opus.md`) et le post AF (P5).
+- ✅ **Phase 4, première passe (13/07 soir)** : E1-E4 exécutées contre les prédictions pré-enregistrées, figures F1-F4 dans `paper/figures/`, verdicts dans `sim/analysis/notes-production-v1.md`. Résultats : frontière de phase **exactement** sur δ=10η (E2.1) ; région de coexistence confirmée sur la droite analytique (E2.2) ; invariance exacte au nombre d'opérateurs (E4.1) ; E3.6 **réfutée telle qu'énoncée** et découverte exploratoire : le piège d'irréversibilité exige une réponse de demande **tardive** (K bas — épargne/crédit), largeur 0.95±0.03 à K=0.05, monotone vers la limite (1−β)S.
+- ✅ **Post AF rédigé et mis à jour** (`paper/af-post-minimal-model.md`, ~2500 mots) : relu par Fable, intègre les résultats de production. **Prêt pour relecture finale par Mathieu puis publication** (avec les figures F1-F4 aux emplacements marqués [Figure: …]).
+- ⬜ Restent : T3.7/T3.8 (P6) ; runs densifiés n≥30 + confirmation K sur seeds neufs + E3.8 + E6 (liste précise dans `notes-production-v1.md` §Suites) ; E5 (transferts endogènes, après T3.8) ; puis phase 5 (papier long, LaTeX, arXiv).
 
 ---
 
