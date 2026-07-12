@@ -13,13 +13,13 @@ We study the dynamics of a **human economic participation index (π)** and look 
 
 ## Status
 
-Early stage — research program and architecture defined, model formalization in progress. See `PLAN.md` (roadmap, in French), `docs/` (research program, simulation architecture, background), `paper/paper.md` (article skeleton).
+Working results. The analytic core (closed-form exclusion threshold, the $\gamma$ criterion, the hysteresis condition) is derived and verified in `paper/model-notes.md`; the agent-based simulation reproduces it (validation layers V1-V3 run in CI) and the pre-registered experiment program (E1-E6, `paper/predictions.md`) has completed its first production pass — verdicts in `sim/analysis/notes-production-v1.md`, figures in `paper/figures/`. A companion post and a full working paper live in `paper/`. Working notes in `docs/` and the analysis notes are partly in French; everything load-bearing for the paper is in English.
 
 ## Principles
 
 - **No baked-in conclusion**: human and AI agents differ only by parameter values, never by special rules; non-tautology checks live in the test suite.
 - **Validation before production**: the simulator must reproduce the analytic solution in degenerate cases before any experiment counts.
-- **Full reproducibility**: every reported number regenerates from a single documented command; experiment configs are versioned.
+- **Full reproducibility**: every reported number regenerates from a single documented command; experiment parameters are committed in the experiment scripts (YAML extraction is a planned refactor).
 
 ## Setup
 
@@ -41,7 +41,7 @@ make clean    # remove .venv and caches
 sim/core/        opportunities, agent populations, capture race, main dynamics
 sim/strategies/  three interchangeable rationality levels + richer strategies
 sim/metrics/     pi (market/total), Gini, niche lifetimes, early-warning indicators
-sim/experiments/ configs (one YAML per experiment) + multi-seed runner
+sim/experiments/ production experiments (committed parameters; YAML refactor planned)
 sim/analysis/    phase-boundary / hysteresis detection, publication figures
 sim/tests/       V1 analytic, V2 sanity (non-tautology), V3 invariance
 ```
