@@ -1,6 +1,6 @@
 # Model Notes — The Gradient Capture Race
 
-> **STATUS: VERIFIED DRAFT (rev. 2, post-review).** Written 2026-07-13 (T2.1–T2.4). Verified four ways — 18 numeric checks, blind independent re-derivation, ABM reproduction (V1 6/6), hostile adversarial review with all required corrections applied (see verification log at bottom). Standing epistemic status: §2-§3 (exclusion) emergent and error-free given declared asymmetries A5/A7/A9; §4 (ratchet) is a sharp consequence of assumption A8, presented as such; top open limitation: partial equilibrium (A10).
+> **STATUS: VERIFIED DRAFT (rev. 2, post-review).** Written 2026-07-13 (T2.1–T2.4). Verified four ways — 19 numeric checks, blind independent re-derivation, ABM reproduction (V1 6/6), hostile adversarial review with all required corrections applied (see verification log at bottom). Standing epistemic status: §2-§3 (exclusion) emergent and error-free given declared asymmetries A5/A7/A9; §4 (ratchet) is a sharp consequence of assumption A8, presented as such; top open limitation: partial equilibrium (A10).
 
 ---
 
