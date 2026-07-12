@@ -12,7 +12,7 @@ Hi Jan,
 
 I'm an independent developer working on what I believe is a missing piece downstream of your Gradual Disempowerment paper: a formal multi-agent model of the economic channel — modeling the economy as a stream of profit opportunities captured competitively by human agents and AI operators, and studying when human participation collapses (thresholds, hysteresis, early-warning signals).
 
-Before building on it, I'd value your view on one design choice: the operational definition of a "human economic participation index" (π) that the whole model rests on — 2 pages attached. In particular whether the decision to count passive capital income *outside* the headline index (ownership ≠ participation) seems right to you, and whether this overlaps with anything already in progress in your group's "concrete research projects" list.
+Before building on it, I'd value your view on one design choice: the operational definition of a "human economic participation index" (π) that the whole model rests on — 2 pages attached. The specific question is the two-channel accounting at the end (§7): the demand side treats all human income as source-agnostic (a dividend spent = a wage spent), while the headline index counts only *self-enforcing* participation — passive capital income is tracked but excluded, on the grounds that a claim enforced by institutions is only as secure as the institutions' alignment, which is the variable under study. Does that split seem right to you? And does this overlap with anything already in progress in your group's "concrete research projects" list?
 
 Any pointer, even one line, would be very useful.
 
@@ -29,7 +29,7 @@ Hi Luke, hi Rudolf,
 
 The Intelligence Curse describes powerful actors losing their incentive to invest in people. I'm an independent developer trying to formalize the micro-mechanism underneath: a multi-agent model where profit opportunities ("gradients") are captured in a race between human agents and AI operators whose capability compounds with reinvested income. Goal: characterize when human market participation collapses — critical thresholds, irreversibility, measurable early warnings — with an agent-based simulation and falsifiable predictions on the emerging agentic economy.
 
-Attached (2 pages): the operational definition of the participation index the model tracks. If you have 10 minutes, I'd value a sanity check on it — especially the choice to count passive AI-capital income outside the headline index, which seemed consistent with your rentier framing.
+Attached (2 pages): the operational definition of the participation index the model tracks. If you have 10 minutes, I'd value a sanity check on it — especially the two-channel split at the end (§7): demand counts all human income regardless of source, but the headline index counts only self-enforcing participation, so passive AI-capital income is tracked separately rather than counted as "being in the loop". That seemed consistent with your rentier framing — a rentier's claim is only as good as the institutions enforcing it — but it is the design choice I'm least certain about.
 
 Happy to share the model notes as they mature.
 

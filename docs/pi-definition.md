@@ -97,9 +97,11 @@ Une sous-économie (une plateforme freelance) fournit un π_marché sectoriel ca
 
 ---
 
-## 7. Arbitrage tranché (DEC-001)
+## 7. Arbitrage tranché (DEC-001, affiné par DEC-002)
 
-**L'actionnaire passif** est traité « hors boucle » : le revenu de capital passif est **hors de π_marché** et **reporté en série séparée ρ** (ni fusionné dans Δ, ni dans les indices de tête). La question « la propriété du capital IA protège-t-elle ? » reste ainsi analysable dans les figures (série ρ, lecture étendue π_total⁺) sans charger la définition. Décision et justification complètes : `docs/decisions.md` → DEC-001. La section limites du papier explicitera ce choix et présentera la lecture alternative « posséder = rester dans la boucle » à l'appui de la série ρ.
+**L'actionnaire passif** est traité « hors boucle » : le revenu de capital passif est **hors de π_marché** et **reporté en série séparée ρ** (ni fusionné dans Δ, ni dans les indices de tête). La question « la propriété du capital IA protège-t-elle ? » reste ainsi analysable dans les figures (série ρ, lecture étendue π_total⁺) sans charger la définition. Décision et justification complètes : `docs/decisions.md` → DEC-001.
+
+**Affinement DEC-002 (objection de Mathieu, intégrée)** : le lien revenu→consommation est indifférent à la source — un dividende dépensé nourrit la demande comme un salaire dépensé. Le modèle en tient compte en séparant deux canaux : **la demande est agnostique à la source** (tout revenu humain disponible — gagné, transféré, ou de capital — l'alimente identiquement, cf. DemandPool à partir de T3.8), tandis que **π mesure le canal participation** : un flux auto-exécutoire (couper un salaire arrête la production) vs un claim qui ne tient que par l'enforcement institutionnel (couper un dividende n'arrête rien). Le dividende garde l'humain économiquement *en vie* (canal demande, mesuré) ; π mesure s'il reste *nécessaire* (canal participation, indice de tête). La section limites du papier présentera les deux lectures avec la série ρ à l'appui.
 
 ---
 
