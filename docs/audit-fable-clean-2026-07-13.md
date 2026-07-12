@@ -192,6 +192,41 @@ GATES, aucun push.
 
 ---
 
+## MISE À JOUR post-audit (même session, sur mandat de Mathieu)
+
+Mathieu a levé le gel des corrections après lecture du rapport. État révisé :
+
+- **M4 — clos hors repo** : Mathieu indique avoir exécuté lui-même la vérification croisée
+  hors famille Claude (étape 0 de la checklist) avec concordance, sans en committer la trace.
+  Décision : on n'en revendique rien de plus que ce que le post dit déjà (« four ways »,
+  toutes intra-famille) ; une ligne au journal de vérification de model-notes reste
+  souhaitable si la date et le modèle tiers sont retrouvés.
+- **m13 — mergé** : branche `audit-fix/gamma-zero-edge` dans master.
+- **M2 — corrigé** : `--exp e3conf` ajouté à `production_v1.py` (protocole exact E3.9-E3.11 :
+  seeds 100-109, t_leg=600, verdicts imprimés, données `results/e3_confirmation.npz`) ;
+  run de re-vérification consigné dans l'addendum de notes-production-v1.
+- **M1/m5 — corrigés** : seeds densifiés commis en défauts (E1/E4 : 30 ; E2/E2b : 10),
+  figures régénérées depuis ce code, texte du papier aligné (abstract + en-tête §5).
+- **M3 — corrigé** : requalification « lateness » dans paper §5.3 et le post AF, adossée au
+  script commité `sim/analysis/static_demand_map.py` (re-dérivation indépendante des bandes
+  du sous-agent, reproduites au centième : aucune en linéaire ; [0.06, 0.84] à K=0.5, n=8 ;
+  [0.93, 2.71] à K=0.05).
+- **m10 — corrigé** : E4.1 et E5.3 requalifiées dans le papier en checks de cohérence
+  d'implémentation.
+- **m7 — corrigé** : README réécrit (statut à jour, claim « configs versionnées » remplacé
+  par l'état réel, note sur les docs en français).
+- **Décision repo (post force-push d'identité)** : Mathieu garde le repo GitHub actuel pour
+  la publication, en connaissance du résidu (anciens commits accessibles par SHA côté
+  GitHub). Risque accepté.
+- **Traduction** : recommandation rendue — traduire seulement la chaîne de preuve
+  (notes-production-v1, les deux revues adversariales, decisions.md) en `.en.md` à côté des
+  originaux, verbatim, par un agent séparé ; le reste demeure en français.
+- **Restent ouverts** : m6 (extraction YAML), m8 (ablation du plafond de richesse), m9
+  (biais O(dt) du signal d'entrée), m11 (défense d'une ligne du π net-de-taxe en §7), m12
+  (tolérance V1 à 45 % sur un point), n16-n19.
+
+---
+
 ## Résumé en français simple (ce que je changerais avant publication)
 
 1. **Rends le chiffre-clé refabricable** : le « 0.64 ± 0.13 » de l'irréversibilité n'a aujourd'hui aucun script — ajoute la commande qui le régénère, sinon c'est parole contre parole.

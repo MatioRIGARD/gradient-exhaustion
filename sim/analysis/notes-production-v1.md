@@ -46,6 +46,32 @@
 
 - **Première passe NÉGATIVE / non concluante** : l'autocorrélation lag-1 de Λ_h reste plate à l'approche de la sortie dans les deux régimes (piège : 0.64→0.65). E6.2 infirmée en l'état ; caveat : l'estimateur naïf sur série brute (jitter d'entrée/sortie, forçage rapide) peut masquer le ralentissement critique — la littérature EWS exige détrendage et forçage lent. À retravailler (suite n°4) avant toute conclusion ; en l'état, **ne pas revendiquer d'early warnings dans le papier**.
 
+## ADDENDUM 2026-07-13 — audit de session fraîche (voir `docs/audit-fable-clean-2026-07-13.md`)
+
+1. **La confirmation E3.9-E3.11 a maintenant un chemin de code commité** : `uv run python
+   sim/experiments/production_v1.py --exp e3conf` (seeds 100-109, t_leg=600 — le run original
+   avait été exécuté avec du code non commité, finding M2 de l'audit). Re-run du 13/07 :
+   gap(K=0.05) = **+0.64 ± 0.06 (SE)**, IC 95 % [+0.51, +0.76] ; gap(linéaire) = **−0.14 ± 0.04**,
+   IC 95 % [−0.22, −0.07] ; différence 0.78, IC disjoints — **E3.9, E3.10, E3.11 re-PASS**,
+   moyennes identiques au run original (dont les ±0.13/±0.08 se lisent comme des IC 95 %).
+   Données : `results/e3_confirmation.npz`.
+2. **Requalification d'E3.6** (finding M3) : la carte de points fixes *statique* du couplage
+   de demande (`sim/analysis/static_demand_map.py`, indépendante de l'ABM) montre une bande
+   bistable aussi pour la réponse raide à K médian (n=8, K=0.5 : Λ_a ∈ [0.06, 0.84]) — bande
+   située loin de la frontière d'exclusion, que le métrique `crossing_gap` (seuillé près de
+   l'exclusion) ne mesure pas et que l'ABM à population finie quitte par bruit démographique.
+   Lecture corrigée : **« près de la frontière d'exclusion, à ces tailles de population, le
+   piège exige une réponse tardive »** — la raideur seule ouvre une fenêtre bistable ailleurs
+   dans la carte déterministe sans produire de piège mesurable ici. La même carte corrobore
+   indépendamment le résultat-phare : bande [0.93, 2.71] à K=0.05 (≈ la limite deux-états 2.0),
+   aucune bande en linéaire.
+3. **E4.1 et E5.3 requalifiées** en checks de cohérence d'implémentation (l'invariance en N
+   découle de la linéarité exacte de la réinvestion agrégée ; π_total = τ post-exclusion est
+   une identité comptable du canal de transfert) — le papier le dit désormais explicitement.
+4. **Seeds densifiés commis en défauts** (E1/E4 : 30 ; E2/E2b : 10) et figures F1/F2/F2b/F4
+   régénérées depuis ce code — chaque figure du papier est reproductible par la commande
+   `--exp` correspondante (finding M1 clos).
+
 ## Suites (tâches à donner à Opus)
 
 1. **Run densifié** : n≥30 seeds pour E1/E2/E2b/E4 ; bimodalité E2.3 ; départ à l'équilibre pour E1. (Config à formaliser en YAML par la même occasion.)
