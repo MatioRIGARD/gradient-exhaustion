@@ -30,6 +30,22 @@
 
 - **E4.1 CONFIRMÉE exactement** : t* identique pour N ∈ {1,2,5,20} à capacité agrégée constante (trajectoires appariées par seed superposées). Le résultat nul est propre : sans dissipation de rentes, la concurrence entre opérateurs ne change rien. **E4.2 (conditionnelle, dissipation) en attente de T3.8.**
 
+## E5 — Redistribution comme frein endogène (F5) — *ajout 13/07c*
+
+- **E5.1 CONFIRMÉE** : exclusion à τ∈{0, 0.5, 0.8}, prévention à τ=0.95 (π_market stationnaire = 1.0) ; seuil analytique τ*≈0.917 encadré.
+- **E5.2 CONFIRMÉE** : t*(0.5)=8.3 (préd. 9.2), t*(0.8)=31.4 (préd. 33) — écarts ≤10 %.
+- **E5.3 CONFIRMÉE au centième** : π_total post-exclusion = τ exactement (0.50, 0.80). Le régime « maintenus en vie, hors de la boucle » est mesuré : Δ = τ.
+- Lecture : à ces paramètres, **la redistribution ne préserve la participation qu'à taux quasi confiscatoire** (>92 %) — le frein doit battre une croissance exponentielle. En dessous, elle achète du délai et de la survie (π_total), pas de la participation.
+
+## E4b — Dissipation de rentes et collusion (F4b) — *ajout 13/07c*
+
+- **E4.4 CONFIRMÉE** : exclusion à ρ_d∈{0, 0.5, 0.9} (t*=3.2, 7.9, 58.7 — divergence près de ρ*≈0.965), prévention à ρ_d=1.0 (6/6 seeds).
+- **E4.5 CONFIRMÉE exactement** : collusion à ρ_d=1.0 → t*=3.2, identique au cas sans dissipation. **La collusion éteint intégralement la protection concurrentielle.**
+
+## E6 — Signaux d'alerte précoce (F6) — *ajout 13/07c*
+
+- **Première passe NÉGATIVE / non concluante** : l'autocorrélation lag-1 de Λ_h reste plate à l'approche de la sortie dans les deux régimes (piège : 0.64→0.65). E6.2 infirmée en l'état ; caveat : l'estimateur naïf sur série brute (jitter d'entrée/sortie, forçage rapide) peut masquer le ralentissement critique — la littérature EWS exige détrendage et forçage lent. À retravailler (suite n°4) avant toute conclusion ; en l'état, **ne pas revendiquer d'early warnings dans le papier**.
+
 ## Suites (tâches à donner à Opus)
 
 1. **Run densifié** : n≥30 seeds pour E1/E2/E2b/E4 ; bimodalité E2.3 ; départ à l'équilibre pour E1. (Config à formaliser en YAML par la même occasion.)

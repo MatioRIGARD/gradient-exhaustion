@@ -316,8 +316,160 @@ def e4(seeds: int = 10) -> None:
     print("E4 done")
 
 
+
+# ── E5: redistribution as an endogenous brake ───────────────────────────────
+
+
+def crossing_time(h: dict[str, np.ndarray]) -> float:
+    idx = np.nonzero(h["lam_a"] >= LAMBDA_BAR)[0]
+    return float(h["t"][idx[0]]) if idx.size else float("nan")
+
+
+def e5(seeds: int = 6) -> None:
+    taus = [0.0, 0.5, 0.8, 0.95]
+    t_end = 120.0
+    rows = []
+    for tau in taus:
+        tcs, pis_m, pis_t = [], [], []
+        for s in range(seeds):
+            h = run_once(
+                {"ai_lam0": 0.3, "ai_eta": 0.06, "ai_delta": 0.05,
+                 "redistribution_rate": tau, "seed": s},
+                t_end,
+            )
+            tcs.append(crossing_time(h))
+            late = h["t"] > 0.85 * t_end
+            k_h, k_a, t_h = (h["kappa_h"][late].mean(), h["kappa_a"][late].mean(),
+                             h["t_h"][late].mean())
+            pis_m.append(k_h / max(k_h + k_a, 1e-9))
+            pis_t.append((k_h + t_h) / max(k_h + k_a + t_h, 1e-9))
+        rows.append((tau, np.nanmean(tcs), np.mean(pis_m), np.mean(pis_t)))
+        print(f"E5 τ={tau}: t*={np.nanmean(tcs):.1f}  π_market={np.mean(pis_m):.2f}  "
+              f"π_total={np.mean(pis_t):.2f}")
+    arr = np.array(rows)
+    save("e5", taus=arr[:, 0], t_star=arr[:, 1], pi_market=arr[:, 2], pi_total=arr[:, 3])
+
+    fig, axes = plt.subplots(1, 2, figsize=(9, 3.8))
+    ts_th = [np.log(LAMBDA_BAR / 0.3) / (0.06 * (1 - t) * 10 - 0.05)
+             if 0.06 * (1 - t) * 10 > 0.05 else np.nan for t in taus]
+    axes[0].plot(taus[:3], ts_th[:3], ls="--", color="#52514e", label="analytic t*(τ)")
+    axes[0].plot(arr[:3, 0], arr[:3, 1], "o", color=CAT[0], label="simulation")
+    axes[0].set(xlabel="redistribution rate τ", ylabel="exclusion time t*",
+                title="delay below τ* ≈ 0.917")
+    axes[0].legend(frameon=False, fontsize=8)
+    axes[1].plot(arr[:, 0], arr[:, 2], "o-", color=CAT[0], label="π_market")
+    axes[1].plot(arr[:, 0], arr[:, 3], "s-", color=CAT[2], label="π_total")
+    axes[1].axvline(1 - 0.05 / 0.6, ls=":", color="#52514e", lw=1.0)
+    axes[1].annotate("τ*", (1 - 0.05 / 0.6, 0.05), fontsize=9, color="#52514e")
+    axes[1].set(xlabel="redistribution rate τ", ylabel="stationary share",
+                title="kept alive (π_total) vs in the loop (π_market)")
+    axes[1].legend(frameon=False, fontsize=8)
+    fig.suptitle("F5 — Redistribution: brake and perfusion", y=1.0)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    fig.savefig(FIGURES / "f5_redistribution.png")
+    print("E5 done")
+
+
+# ── E4b: rent dissipation and collusion ─────────────────────────────────────
+
+
+def e4b(seeds: int = 6) -> None:
+    rhos = [0.0, 0.5, 0.9, 1.0]
+    t_end = 120.0
+    rows, collusion_row = [], None
+    for rho in rhos:
+        tcs = []
+        for s in range(seeds):
+            h = run_once(
+                {"ai_lam0": 0.3, "ai_eta": 0.06, "ai_delta": 0.05,
+                 "ai_n_operators": 20, "ai_rent_dissipation": rho, "seed": s},
+                t_end,
+            )
+            tcs.append(crossing_time(h))
+        rows.append((rho, np.nanmean(tcs), float(np.mean(np.isnan(tcs)))))
+        if np.all(np.isnan(tcs)):
+            print(f"E4b ρ_d={rho}: NO exclusion ({seeds} seeds)")
+        else:
+            n_exc = seeds - int(np.isnan(tcs).sum())
+            print(f"E4b ρ_d={rho}: t*={np.nanmean(tcs):.1f}  (excluded in {n_exc}/{seeds})")
+    tcs = []
+    for s in range(seeds):
+        h = run_once(
+            {"ai_lam0": 0.3, "ai_eta": 0.06, "ai_delta": 0.05, "ai_n_operators": 20,
+             "ai_rent_dissipation": 1.0, "ai_collude": True, "seed": s},
+            t_end,
+        )
+        tcs.append(crossing_time(h))
+    collusion_row = np.nanmean(tcs)
+    print(f"E4b collusion (ρ_d=1.0, collude=True): t*={collusion_row:.1f}")
+    arr = np.array(rows)
+    save("e4b", rhos=arr[:, 0], t_star=arr[:, 1], frac_no_excl=arr[:, 2],
+         t_star_collusion=np.array([collusion_row]))
+
+    fig, ax = plt.subplots(figsize=(5.6, 3.8))
+    ax.plot(arr[:, 0], arr[:, 1], "o-", color=CAT[0], label="20 competing operators")
+    ax.scatter([1.0], [collusion_row], marker="D", s=45, color=CAT[2], zorder=3,
+               label="20 colluding operators (ρ_d=1)")
+    ax.axvline(0.965, ls=":", color="#52514e", lw=1.0)
+    ax.annotate("ρ* ≈ 0.965", (0.965, ax.get_ylim()[0]), fontsize=8, color="#52514e",
+                rotation=90, va="bottom", ha="right")
+    ax.set(xlabel="rent dissipation share ρ_d", ylabel="exclusion time t* (NaN = prevented)",
+           title="F4b — Competition protects only at near-total dissipation;\n"
+                 "collusion switches it off")
+    ax.legend(frameon=False, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "f4b_dissipation.png")
+    print("E4b done")
+
+
+
+# ── E6: early-warning signals ───────────────────────────────────────────────
+
+
+def e6(seeds: int = 3) -> None:
+    """Rolling lag-1 autocorrelation of participation on the up-leg, before each
+    run's own exit point: predicted to ramp up in the demand-trap regime
+    (K=0.05) and to stay flat-ish in the linear regime (E6.1-E6.3)."""
+    from sim.metrics.indices import rolling_lag1_autocorr
+
+    window = 60  # recorded points (~6 time units at record stride 1.0)
+    curves = {}
+    for label, (n, k) in {"linear": (0.0, 0.5), "trap (K=0.05)": (8.0, 0.05)}.items():
+        acs = []
+        for s in range(seeds):
+            r = ramp(n, 0.6, seed=100 + s, t_leg=600.0, hill_k=k)
+            up = r["leg"] == 0
+            lam_h = r["lam_h"][up]
+            exit_idx = np.argmax(np.convolve(lam_h, np.ones(9) / 9, "same") < 0.3)
+            pre = lam_h[: max(exit_idx, window + 10)]
+            ac = rolling_lag1_autocorr(pre, window)
+            acs.append(ac[-200:])  # the 200 points leading into the exit
+        min_len = min(a.size for a in acs)
+        curves[label] = np.vstack([a[-min_len:] for a in acs])
+        mean_late = np.nanmean(curves[label][:, -40:])
+        mean_early = np.nanmean(curves[label][:, :40])
+        print(f"E6 {label}: lag-1 autocorr early={mean_early:.2f} -> late={mean_late:.2f}")
+    save("e6", **{k.replace(" ", "_").replace("(", "").replace(")", "").replace("=", "")
+                  .replace(".", ""): v for k, v in curves.items()})
+
+    fig, ax = plt.subplots(figsize=(6.4, 3.8))
+    for (label, arr), color in zip(curves.items(), (CAT[0], CAT[2]), strict=False):
+        x = np.arange(-arr.shape[1], 0)
+        ax.plot(x, np.nanmean(arr, axis=0), color=color, label=label)
+        lo, hi = np.nanpercentile(arr, 10, axis=0), np.nanpercentile(arr, 90, axis=0)
+        ax.fill_between(x, lo, hi, color=color, alpha=0.15, lw=0)
+    ax.set(xlabel="recorded steps before own exit point",
+           ylabel="rolling lag-1 autocorrelation of Λh",
+           title="F6 — Early warning before the exit: trap regime vs linear")
+    ax.legend(frameon=False, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "f6_early_warnings.png")
+    print("E6 done")
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    p.add_argument("--exp", required=True, choices=["e1", "e2", "e2b", "e3", "e4"])
+    choices = ["e1", "e2", "e2b", "e3", "e4", "e5", "e4b", "e6"]
+    p.add_argument("--exp", required=True, choices=choices)
     args = p.parse_args()
-    {"e1": e1, "e2": e2, "e2b": e2b, "e3": e3, "e4": e4}[args.exp]()
+    {"e1": e1, "e2": e2, "e2b": e2b, "e3": e3, "e4": e4, "e5": e5, "e4b": e4b, "e6": e6}[args.exp]()

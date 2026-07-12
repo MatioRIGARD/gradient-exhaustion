@@ -21,7 +21,12 @@
 - ✅ **GATE 2 : FRANCHIE le 13/07/2026** (délégué par Mathieu, conditions du dossier remplies : relecture adversariale passée, corrections appliquées). Périmètre de publication acté : §2-3 en résultat principal, §4 en résultat conditionnel avec la découverte E3-préliminaire.
 - ✅ **Phase 4, première passe (13/07 soir)** : E1-E4 exécutées contre les prédictions pré-enregistrées, figures F1-F4 dans `paper/figures/`, verdicts dans `sim/analysis/notes-production-v1.md`. Résultats : frontière de phase **exactement** sur δ=10η (E2.1) ; région de coexistence confirmée sur la droite analytique (E2.2) ; invariance exacte au nombre d'opérateurs (E4.1) ; E3.6 **réfutée telle qu'énoncée** et découverte exploratoire : le piège d'irréversibilité exige une réponse de demande **tardive** (K bas — épargne/crédit), largeur 0.95±0.03 à K=0.05, monotone vers la limite (1−β)S.
 - ✅ **Post AF rédigé et mis à jour** (`paper/af-post-minimal-model.md`, ~2500 mots) : relu par Fable, intègre les résultats de production. **Prêt pour relecture finale par Mathieu puis publication** (avec les figures F1-F4 aux emplacements marqués [Figure: …]).
-- ⬜ Restent : T3.7/T3.8 (P6) ; runs densifiés n≥30 + confirmation K sur seeds neufs + E3.8 + E6 (liste précise dans `notes-production-v1.md` §Suites) ; E5 (transferts endogènes, après T3.8) ; puis phase 5 (papier long, LaTeX, arXiv).
+- ✅ **Confirmation K sur seeds neufs** (E3.9-E3.11 pré-enregistrées, toutes confirmées) : le résultat « le piège exige une demande tardive » n'est plus exploratoire.
+- ✅ **T3.7** : règles de décision interchangeables — replicator (ancre V1) + best_response validées (tests) ; niveau « learning » implémenté mais descopé honnêtement (inférence individuelle non informative en régime d'income lumpy — voir docstring ; suivi).
+- ✅ **T3.8** : redistribution (taxe τ→transferts, DEC-002 câblé : la demande reçoit capture+transferts), dissipation de rentes entre opérateurs, drapeau collusion. π_total implémenté.
+- ✅ **E5 et E4b** (prédictions 13/07c pré-enregistrées, toutes confirmées) : la redistribution ne préserve la participation qu'à taux quasi confiscatoire (τ*≈0.92 ; π_total=τ exactement après exclusion) ; la concurrence entre IA ne protège qu'à dissipation quasi totale (ρ*≈0.97) et **la collusion éteint exactement la protection**. Figures F5, F4b.
+- �Ⓝ **E6 première passe négative** (pas d'early warnings détectables avec l'estimateur naïf) — documenté, à retravailler, ne pas revendiquer dans le papier.
+- ⬜ Restent : densification n≥30 (cosmétique papier), E3.8, E6 retravaillé, calibration du niveau learning, balayage β×K ; puis phase 5 (papier long, LaTeX, arXiv). Le post AF est prêt et n'attend rien de tout ça.
 
 ---
 
