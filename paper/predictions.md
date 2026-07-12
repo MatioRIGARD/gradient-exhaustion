@@ -45,6 +45,15 @@ N operators, aggregate initial capability fixed, each reinvesting its own income
 2. In β<1 runs (fold present), rolling variance and lag-1 autocorrelation of π rise ahead of the collapse; the rise precedes t_exclusion by an interval growing with (1−β).
 3. Sharp falsifiable statement: EWS discriminate the demand-coupled regime from the uncoupled one — if EWS appear equally in both, prediction REFUTED.
 
+## ADDENDUM 2026-07-13 (pre-registered BEFORE the E3 production runs, AFTER the preliminary finding of notes-preliminary-e3.md)
+
+The preliminary run refuted E3.4 for *linear* demand coupling. The production E3 adds a demand-response steepness parameter (normalized Hill sigmoid, exponent n; n≤0 = linear legacy, K=0.5). New predictions:
+
+- **E3.5** — n linear: no hysteresis loop (replicates the preliminary finding); exclusion of participation completes near Λ_a ≈ βS−θ on the way up.
+- **E3.6** — loop appears above a critical steepness n_c (existence claim; n_c not predicted quantitatively) and its width increases with n.
+- **E3.7** — as n grows large the loop width approaches the two-state value (1−β)S from below.
+- **E3.8** — permanent trap (no re-entry at Λ_a=0) for β < θ/S at high n, absent at n linear.
+
 ## Out of scope of these predictions
 
 Labor channel (λ), transfers (T), Goodhart on π, heterogeneous difficulties with human ceilings (the "front" prediction of A4 audit: exclusion proceeds skill-band by skill-band) — to be pre-registered when T3.8+ lands, before their experiments run.

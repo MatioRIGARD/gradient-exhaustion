@@ -55,17 +55,25 @@ class OpportunityPool:
 
 @dataclass
 class DemandPool:
-    """Endogenous value multiplier: m = beta + (1 - beta) * D.
+    """Endogenous value multiplier: m = beta + (1 - beta) * h(D).
 
-    D tracks human earned income (EMA), normalized by its reference level
-    `ref_income` (the full-participation flow). beta is the autonomous share
-    of demand; beta = 1 switches the feedback off entirely.
+    D tracks human disposable income (EMA; in the v1 core the only human
+    income channel is capture — DEC-002 binds later channels), normalized by
+    its reference level `ref_income` (the full-participation flow). beta is
+    the autonomous share of demand; beta = 1 switches the feedback off.
+
+    Response shape h: linear h(D) = D when hill_n <= 0 (legacy, no
+    bistability per the preliminary E3 finding), else a normalized Hill
+    sigmoid h(D) = D^n (1 + K^n) / (D^n + K^n) with h(0)=0, h(1)=1 — the
+    steepness n is the "demand stickiness/nonlinearity" the ratchet requires.
     """
 
     beta: float
     ref_income: float
     smoothing: float  # EMA rate per unit time
     level: float = 1.0  # normalized D, starts at full participation
+    hill_n: float = 0.0  # <= 0: linear response
+    hill_k: float = 0.5  # half-response point of the sigmoid
 
     def update(self, human_income_flow: float, dt: float) -> None:
         target = 0.0 if self.ref_income <= 0 else human_income_flow / self.ref_income
@@ -74,4 +82,10 @@ class DemandPool:
 
     @property
     def multiplier(self) -> float:
-        return self.beta + (1.0 - self.beta) * self.level
+        d = max(self.level, 0.0)
+        if self.hill_n <= 0:
+            h = d
+        else:
+            dn, kn = d**self.hill_n, self.hill_k**self.hill_n
+            h = dn * (1.0 + kn) / (dn + kn)
+        return self.beta + (1.0 - self.beta) * h

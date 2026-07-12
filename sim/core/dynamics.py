@@ -42,9 +42,13 @@ class SimConfig:
     ai_eta: float = 0.0
     ai_delta: float = 0.0
     ai_ceiling: float = float("inf")
+    ai_lam_max: float = float("inf")
+    ai_n_operators: int = 1
     # demand
     beta: float = 1.0  # autonomous share; 1.0 = exogenous values
     demand_smoothing: float = 2.0
+    demand_hill_n: float = 0.0  # <=0: linear response (legacy)
+    demand_hill_k: float = 0.5
     # integration
     dt: float = 0.01
     seed: int = 0
@@ -86,7 +90,10 @@ class Simulation:
         self.humans.income_ema = cfg.c_h  # start at break-even belief
         if cfg.n_active_init > 0:
             self.humans.activate(np.arange(cfg.n_active_init))
-        self.ais = AIPopulation.single(cfg.ai_lam0, cfg.ai_eta, cfg.ai_delta, cfg.ai_ceiling)
+        self.ais = AIPopulation.create(
+            cfg.ai_n_operators, cfg.ai_lam0, cfg.ai_eta, cfg.ai_delta, cfg.ai_ceiling,
+            cfg.ai_lam_max,
+        )
         # warm-start the pool at its stationary count for the initial intensities,
         # so the income signal is unbiased from t=0 (no cold-start starvation)
         lam0 = cfg.mu_h * cfg.n_active_init + cfg.ai_lam0
@@ -95,7 +102,10 @@ class Simulation:
         self.opps.spawn(self.rng, n_warm, cfg.v, 1.0, (cfg.difficulty_lo, cfg.difficulty_hi))
         # reference human income = analytic full-participation flow at beta=1
         ref = max(cfg.g * cfg.v - (cfg.c_h / cfg.mu_h) * cfg.theta, 1e-12)
-        self.demand = DemandPool(cfg.beta, ref_income=ref, smoothing=cfg.demand_smoothing)
+        self.demand = DemandPool(
+            cfg.beta, ref_income=ref, smoothing=cfg.demand_smoothing,
+            hill_n=cfg.demand_hill_n, hill_k=cfg.demand_hill_k,
+        )
         self.t = 0.0
         self.kappa_h_flow = 0.0  # EMA of human capture income flow
         self.kappa_a_flow = 0.0

@@ -127,21 +127,41 @@ class HumanPopulation:
 
 @dataclass
 class AIPopulation:
-    """AI operators: intensity compounds with reinvested income (A7)."""
+    """AI operators: intensity compounds with reinvested income (A7).
+
+    lam_max is the optional capability saturation of audit row A7' (rising
+    marginal cost of capability): with lam_max below the human viability
+    threshold, the model predicts a stable coexistence region.
+    """
 
     lam: np.ndarray  # per-operator detection intensity
     eta: np.ndarray  # income -> capability conversion rate
     delta: np.ndarray  # capability depreciation rate
     ceiling: np.ndarray = field(default_factory=lambda: np.empty(0))
+    lam_max: np.ndarray = field(default_factory=lambda: np.empty(0))
+
+    @classmethod
+    def create(
+        cls,
+        n_operators: int,
+        lam0_total: float,
+        eta: float,
+        delta: float,
+        ceiling: float = np.inf,
+        lam_max: float = np.inf,
+    ):
+        n = max(1, n_operators)
+        return cls(
+            lam=np.full(n, lam0_total / n),
+            eta=np.full(n, eta),
+            delta=np.full(n, delta),
+            ceiling=np.full(n, ceiling),
+            lam_max=np.full(n, lam_max),
+        )
 
     @classmethod
     def single(cls, lam0: float, eta: float, delta: float, ceiling: float = np.inf):
-        return cls(
-            lam=np.array([lam0]),
-            eta=np.array([eta]),
-            delta=np.array([delta]),
-            ceiling=np.array([ceiling]),
-        )
+        return cls.create(1, lam0, eta, delta, ceiling)
 
     def intensity_for(self, difficulty: np.ndarray) -> np.ndarray:
         order = np.argsort(self.ceiling)
@@ -156,4 +176,4 @@ class AIPopulation:
 
     def reinvest(self, income_per_operator: np.ndarray, dt: float) -> None:
         self.lam += dt * (self.eta * income_per_operator - self.delta * self.lam)
-        np.clip(self.lam, 0.0, None, out=self.lam)
+        np.clip(self.lam, 0.0, self.lam_max, out=self.lam)
