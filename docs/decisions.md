@@ -16,6 +16,18 @@
 
 ---
 
+## DEC-002 — La demande est nourrie par le revenu humain TOTAL ; π reste côté offre (2026-07-13)
+
+**Question (soulevée par Mathieu).** Intuition : ce qui définit « être dans la boucle », c'est le lien revenu→consommation, pas la manière de gagner le revenu — un actionnaire passif qui consomme vaut un salarié qui consomme.
+
+**Décision.** L'intuition est correcte **pour le canal demande** et fausse **pour le canal participation**, et le modèle doit refléter les deux séparément :
+1. **Boucle de demande (sim)** : à partir de T3.8, le `DemandPool` doit être nourri par le **revenu humain disponible total** (κ_h + λ_h + T_h + R_h), pas seulement κ_h. La source du revenu est indifférente côté demande ; ne compter que la capture sous-estimerait la demande des mondes à forte redistribution/actionnariat et biaiserait le diagnostic dans notre sens (interdit).
+2. **π inchangé** (DEC-001 maintenu) : π mesure la nécessité fonctionnelle (le flux se défend tout seul : couper un salaire arrête la production ; couper un dividende n'arrête rien et ne tient que par l'enforcement institutionnel — dont l'alignement est précisément la variable étudiée). π = racine de l'arbre de dépendances ; revenu→consommation = feuille.
+
+**Conséquence pour le papier.** Dire explicitement : « rester dans la boucle par la consommation » est un canal réel et distinct — mesuré par β (part de la demande qui ne prend plus sa fonction objectif chez les humains) et par les séries Δ/ρ — qui maintient les humains *économiquement en vie* sans les maintenir *en position de force*, car il repose sur des claims non auto-exécutoires. La lecture « consommateur = source de la fonction objectif de l'économie » est la forme forte de ce canal et vit dans β.
+
+---
+
 ## Comment trancher les prochains arbitrages (heuristiques, dans l'ordre)
 
 1. **Anti-tautologie d'abord** : rejeter toute option qui transforme la conclusion en définition (dans un sens ou dans l'autre). En cas de doute : la distinction va dans une *définition de mesure* + une *série de sortie* qui garde l'alternative observable — jamais dans une règle du modèle.
