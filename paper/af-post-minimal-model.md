@@ -40,7 +40,7 @@ $$\gamma = \frac{\eta c_h}{\mu_h} - \delta,$$
 
 where $\eta$ converts reinvested income into capability and $\delta$ is depreciation. Then:
 
-- If $\gamma \le 0$, AI capability decays and the system converges to human dominance. AI cannot bootstrap, because human free entry keeps the field congested and caps AI's return per unit of capability at the human break-even rate.
+- If $\gamma < 0$, AI capability decays and the system converges to human dominance. AI cannot bootstrap, because human free entry keeps the field congested and caps AI's return per unit of capability at the human break-even rate. (At the knife-edge $\gamma = 0$, capability stays frozen and coexistence persists.)
 - If $\gamma > 0$, AI capability grows exponentially and crosses $\bar\Lambda$ at a **finite exclusion time** $t^* = \gamma^{-1}\ln(\bar\Lambda/\Lambda_a(0))$. The participation share falls slowly at first, then accelerates: gradual, then sudden.
 
 No strategy, no coordination, no intent appears anywhere — this is a formal instance of Critch's agent-agnostic process. But "competition plus compounding" is sufficient *only jointly* with the model's other structural asymmetries, and I want those on the table as part of the claim, not as fine print: human free entry retains zero rent (so humans have nothing to reinvest), while the AI side reinvests **gross** income with no zero-profit discipline (assumption **A9**). If competition *among* AI operators dissipated their rents the way free entry dissipates human rents, the effective $\eta$ would fall and a coexistence region would open. That is an open question, not a settled result.
