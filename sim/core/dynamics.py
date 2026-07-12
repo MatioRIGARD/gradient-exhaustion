@@ -17,6 +17,7 @@ import numpy as np
 from sim.core.agents import AIPopulation, HumanPopulation
 from sim.core.capture import run_races
 from sim.core.opportunities import DemandPool, OpportunityPool
+from sim.strategies.base import make_rule
 
 
 @dataclass
@@ -44,7 +45,13 @@ class SimConfig:
     ai_ceiling: float = float("inf")
     ai_lam_max: float = float("inf")
     ai_n_operators: int = 1
+    ai_rent_dissipation: float = 0.0  # share of capture value burned by operator competition
+    ai_collude: bool = False  # colluding operators dissipate nothing
+    redistribution_rate: float = 0.0  # tax on AI effective income, transferred to humans
     # demand
+    human_decision: str = "replicator"  # replicator | best_response | learning
+    decision_params: dict[str, float] = field(default_factory=dict)
+    # demand (part 2)
     beta: float = 1.0  # autonomous share; 1.0 = exogenous values
     demand_smoothing: float = 2.0
     demand_hill_n: float = 0.0  # <=0: linear response (legacy)
@@ -71,6 +78,7 @@ class History:
     n_active: list[int] = field(default_factory=list)
     kappa_h: list[float] = field(default_factory=list)  # smoothed flow
     kappa_a: list[float] = field(default_factory=list)  # smoothed flow
+    t_h: list[float] = field(default_factory=list)  # smoothed transfer flow
     value_multiplier: list[float] = field(default_factory=list)
 
     def as_arrays(self) -> dict[str, np.ndarray]:
@@ -106,9 +114,11 @@ class Simulation:
             cfg.beta, ref_income=ref, smoothing=cfg.demand_smoothing,
             hill_n=cfg.demand_hill_n, hill_k=cfg.demand_hill_k,
         )
+        self.rule = make_rule(cfg.human_decision, cfg.n_pool, cfg.decision_params)
         self.t = 0.0
         self.kappa_h_flow = 0.0  # EMA of human capture income flow
         self.kappa_a_flow = 0.0
+        self.t_flow = 0.0  # EMA of transfer flow to humans (redistribution)
         self.flow_ema_rate = cfg.income_ema_rate
 
     def step(self) -> None:
@@ -123,15 +133,29 @@ class Simulation:
         out = run_races(self.opps, self.humans, self.ais, cfg.theta, dt, rng)
         self.opps.remove(out.gone)
 
+        # operator competition dissipates a share of captured value unless they
+        # collude (E4.2); dissipated value is burned — reported, not recirculated
+        n_ops = self.ais.lam.size
+        dissip = 0.0 if cfg.ai_collude else cfg.ai_rent_dissipation * (1.0 - 1.0 / n_ops)
+        ai_income_eff = out.ai_income * (1.0 - dissip)
+        ai_per_op_eff = out.ai_income_per_operator * (1.0 - dissip)
+        # redistribution: tax on AI effective income, transferred to humans (T channel)
+        t_transfer = cfg.redistribution_rate * ai_income_eff
+        ai_income_net = ai_income_eff - t_transfer
+        ai_per_op_net = ai_per_op_eff * (1.0 - cfg.redistribution_rate)
+
         a = min(1.0, self.flow_ema_rate * dt)
         self.kappa_h_flow += a * (out.human_income / dt - self.kappa_h_flow)
-        self.kappa_a_flow += a * (out.ai_income / dt - self.kappa_a_flow)
+        self.kappa_a_flow += a * (ai_income_net / dt - self.kappa_a_flow)
+        self.t_flow += a * (t_transfer / dt - self.t_flow)
 
         expected_flow = float(self.humans.mu.mean()) * float(self.opps.value.sum())
         self.humans.update_signal(expected_flow, dt)
-        self.humans.entry_exit(rng, dt)
-        self.ais.reinvest(out.ai_income_per_operator / dt, dt)
-        self.demand.update(self.kappa_h_flow, dt)
+        self.humans.tick(dt)
+        self.rule.apply(self.humans, rng, dt)
+        self.ais.reinvest(ai_per_op_net / dt, dt)
+        # DEC-002: demand is fed by TOTAL human disposable income (capture + transfers)
+        self.demand.update(self.kappa_h_flow + self.t_flow, dt)
         self.t += dt
 
     def run(self, t_end: float, record_every: int = 10) -> History:
@@ -146,5 +170,6 @@ class Simulation:
                 hist.n_active.append(self.humans.n_active)
                 hist.kappa_h.append(self.kappa_h_flow)
                 hist.kappa_a.append(self.kappa_a_flow)
+                hist.t_h.append(self.t_flow)
                 hist.value_multiplier.append(self.demand.multiplier)
         return hist

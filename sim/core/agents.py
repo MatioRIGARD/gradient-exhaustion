@@ -100,29 +100,12 @@ class HumanPopulation:
         self.active[idx] = True
         self.wealth[idx] = self.patience * self.cost[idx]
 
-    def entry_exit(self, rng: np.random.Generator, dt: float) -> None:
-        """Symmetric signal response + exploration + bankruptcy backstop.
-
-        Entries and voluntary exits respond at the same rate to the signed
-        gap between the entry signal and the participation cost; a convex
-        (entries-only) response would rectify signal noise into a permanent
-        over-participation bias. Bankruptcy remains as the hard backstop.
-        """
+    def tick(self, dt: float) -> None:
+        """Shared mechanics under every decision rule: participation-cost
+        drain and the bankruptcy backstop. Voluntary entry/exit lives in the
+        pluggable decision rules (sim/strategies/)."""
         self.wealth[self.active] -= self.cost[self.active] * dt
         self.active &= self.wealth > 0.0
-
-        mean_cost = float(self.cost.mean())
-        gap = (self.income_ema - mean_cost) / mean_cost
-        if gap < 0.0:
-            incumbents = np.flatnonzero(self.active)
-            n_out = min(incumbents.size, rng.poisson(self.entry_rate * min(1.0, -gap) * dt))
-            if n_out > 0:
-                self.active[rng.choice(incumbents, n_out, replace=False)] = False
-        rate_in = self.explore_rate + self.entry_rate * min(1.0, max(0.0, gap))
-        candidates = np.flatnonzero(~self.active)
-        n_in = min(candidates.size, rng.poisson(rate_in * dt))
-        if n_in > 0:
-            self.activate(rng.choice(candidates, n_in, replace=False))
 
 
 @dataclass

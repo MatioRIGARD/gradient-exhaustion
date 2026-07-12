@@ -20,6 +20,18 @@ def pi_market(kappa_h: np.ndarray, kappa_a: np.ndarray) -> np.ndarray:
     return out
 
 
+def pi_total(kappa_h: np.ndarray, kappa_a: np.ndarray, t_h: np.ndarray) -> np.ndarray:
+    """Share of the pre-tax earned flow that sustains humans (earned + transfers).
+
+    Denominator = kappa_h + kappa_a + t_h (AI income is recorded net of tax, so
+    adding the transfer restores the pre-tax earned flow). pi_total - pi_market
+    is the perfusion gap of docs/pi-definition.md."""
+    total = kappa_h + kappa_a + t_h
+    out = np.full_like(total, np.nan, dtype=float)
+    np.divide(kappa_h + t_h, total, out=out, where=total > 0)
+    return out
+
+
 def stationary_mean(t: np.ndarray, series: np.ndarray, discard_frac: float = 0.5) -> float:
     """Mean of `series` after discarding the initial `discard_frac` of the run."""
     cut = t >= t[0] + discard_frac * (t[-1] - t[0])

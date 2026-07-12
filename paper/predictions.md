@@ -62,6 +62,19 @@ The exploratory pass (seeds 0-2, ramp legs 300) found the hysteresis driver to b
 - **E3.10** — gap(linear) ∈ [−0.3, +0.3] (compatible with zero).
 - **E3.11** — gap(K=0.05) − gap(linear) > 0.4 with non-overlapping 95% CIs.
 
+## ADDENDUM 2026-07-13c (pre-registered BEFORE the E5/E4b runs — redistribution and rent dissipation, T3.8)
+
+**E5 — redistribution as an endogenous brake** (β=1 to isolate the reinvestment channel; tax rate τ on AI income, transferred to humans; η=0.06, δ=0.05, Λ_a(0)=0.3):
+- **E5.1** — effective growth is γ(τ) = η(1−τ)c_h/μ_h − δ; exclusion is prevented iff τ > τ* = 1 − δμ_h/(ηc_h) ≈ **0.917**. Concretely: exclusion at τ ∈ {0, 0.5, 0.8}; no exclusion at τ = 0.95 (stationary π_market > 0.5).
+- **E5.2** — below τ*, exclusion time scales as t*(τ) = t*(0)·γ(0)/γ(τ): with t*(0) ≈ 4.2, predict t*(0.5) ≈ 9.2 and t*(0.8) ≈ 33 (±35%).
+- **E5.3** — post-exclusion, π_total ≈ τ exactly (transfers are the only human income), so the perfusion gap Δ = π_total − π_market ≈ τ: the "kept alive but out of the loop" regime, now measurable.
+- Reading to test in words: **redistribution helps only via confiscatory rates at these parameters** — because the brake must beat exponential compounding, not linear growth.
+
+**E4b — rent dissipation between operators** (N=20 operators, dissipation share ρ_d of captured value burned by competition, collusion flag restores ρ_d=0):
+- **E4.4** — prevention iff η(1−ρ_d(1−1/N))c_h/μ_h < δ, i.e. ρ_d > ρ* ≈ **0.965** at baseline: exclusion at ρ_d ∈ {0, 0.5, 0.9}; no exclusion at ρ_d = 1.0.
+- **E4.5** — with the collusion flag on, the single-operator outcome is restored at any ρ_d (t* back to ≈ 4.2 ± 35%).
+- Reading: **AI-vs-AI competition protects humans only at near-total rent dissipation, and collusion switches the protection off entirely.**
+
 ## Out of scope of these predictions
 
 Labor channel (λ), transfers (T), Goodhart on π, heterogeneous difficulties with human ceilings (the "front" prediction of A4 audit: exclusion proceeds skill-band by skill-band) — to be pre-registered when T3.8+ lands, before their experiments run.
