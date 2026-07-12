@@ -1,6 +1,6 @@
 """Production experiments E1-E4 (first pass; seeds to be densified by a later task).
 
-Usage:  uv run python sim/experiments/production_v1.py --exp e1|e2|e2b|e3|e4
+Usage:  uv run python sim/experiments/production_v1.py --exp e1|e2|e2b|e3|e3conf|e4|e5|e4b|e6
 Data:   results/<exp>.npz (config embedded; gitignored)
 Figures: paper/figures/f*.png (committed)
 Verdicts vs paper/predictions.md are written by the analysis notes, not here.
@@ -80,7 +80,7 @@ def save(exp: str, **arrays) -> None:
 # ── E1: pi(t) vs AI progress rate ───────────────────────────────────────────
 
 
-def e1(seeds: int = 10) -> None:
+def e1(seeds: int = 30) -> None:
     etas = [0.003, 0.01, 0.02, 0.04, 0.08]
     t_end, delta, lam0 = 60.0, 0.05, 0.3
     curves = {}
@@ -113,7 +113,7 @@ def e1(seeds: int = 10) -> None:
 # ── E2: phase diagram eta x delta ───────────────────────────────────────────
 
 
-def e2(seeds: int = 3) -> None:
+def e2(seeds: int = 10) -> None:
     etas = np.linspace(0.002, 0.05, 9)
     deltas = np.linspace(0.02, 0.5, 9)
     t_end = 100.0
@@ -151,7 +151,7 @@ def e2(seeds: int = 3) -> None:
 # ── E2b: coexistence under capability saturation (A7') ─────────────────────
 
 
-def e2b(seeds: int = 3) -> None:
+def e2b(seeds: int = 10) -> None:
     caps = np.linspace(0.5, 6.0, 8)
     t_end = 80.0
     means, ses = [], []
@@ -279,10 +279,47 @@ def e3(seeds: int = 3) -> None:
     print("E3 done")
 
 
+# ── E3conf: pre-registered K-confirmation (E3.9-E3.11) ──────────────────────
+
+
+def e3conf(seeds: int = 10) -> None:
+    """Confirmation protocol of notes-production-v1.md (ADDENDUM 2026-07-13b):
+    FRESH seeds 100-109, ramp legs t_leg=600 (half the exploratory ramp speed),
+    beta=0.6, late response (n=8, K=0.05) vs linear legacy. Verdicts against
+    predictions E3.9-E3.11. This is the code path for the headline hysteresis
+    number (gap under late demand vs linear); added by the 2026-07-13 audit —
+    the original confirmation run was executed with uncommitted code."""
+    beta, t_leg = 0.6, 600.0
+    gaps = {"late": [], "linear": []}
+    for s in range(100, 100 + seeds):
+        gaps["late"].append(crossing_gap(ramp(8.0, beta, seed=s, t_leg=t_leg, hill_k=0.05)))
+        gaps["linear"].append(crossing_gap(ramp(0.0, beta, seed=s, t_leg=t_leg)))
+        print(f"E3conf seed {s}: gap_late={gaps['late'][-1]:+.2f}  "
+              f"gap_linear={gaps['linear'][-1]:+.2f}")
+    out = {}
+    for key, vals in gaps.items():
+        arr = np.asarray(vals)
+        mean, se = float(np.nanmean(arr)), float(np.nanstd(arr) / np.sqrt(seeds))
+        out[key] = (mean, se)
+        print(f"E3conf {key}: gap = {mean:+.2f} ± {se:.2f} (SE), "
+              f"95% CI [{mean - 1.96 * se:+.2f}, {mean + 1.96 * se:+.2f}]")
+    (ml, sl), (mn, sn) = out["late"], out["linear"]
+    ci_disjoint = (ml - 1.96 * sl) > (mn + 1.96 * sn)
+    print(f"E3.9  gap(K=0.05) in [0.6, 1.4] and >0 at 95%: "
+          f"{'PASS' if 0.6 <= ml <= 1.4 and ml - 1.96 * sl > 0 else 'FAIL'}")
+    print(f"E3.10 gap(linear) in [-0.3, +0.3]: {'PASS' if -0.3 <= mn <= 0.3 else 'FAIL'}")
+    print(f"E3.11 difference {ml - mn:.2f} > 0.4 with disjoint 95% CIs: "
+          f"{'PASS' if ml - mn > 0.4 and ci_disjoint else 'FAIL'}")
+    save("e3_confirmation", gap_late=np.asarray(gaps["late"]),
+         gap_linear=np.asarray(gaps["linear"]),
+         seeds=np.arange(100, 100 + seeds), t_leg=np.array([t_leg]))
+    print("E3conf done")
+
+
 # ── E4: number of operators ─────────────────────────────────────────────────
 
 
-def e4(seeds: int = 10) -> None:
+def e4(seeds: int = 30) -> None:
     ns = [1, 2, 5, 20]
     t_end = 30.0
     t_cross = {n: [] for n in ns}
@@ -469,7 +506,8 @@ def e6(seeds: int = 3) -> None:
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    choices = ["e1", "e2", "e2b", "e3", "e4", "e5", "e4b", "e6"]
+    choices = ["e1", "e2", "e2b", "e3", "e3conf", "e4", "e5", "e4b", "e6"]
     p.add_argument("--exp", required=True, choices=choices)
     args = p.parse_args()
-    {"e1": e1, "e2": e2, "e2b": e2b, "e3": e3, "e4": e4, "e5": e5, "e4b": e4b, "e6": e6}[args.exp]()
+    {"e1": e1, "e2": e2, "e2b": e2b, "e3": e3, "e3conf": e3conf, "e4": e4,
+     "e5": e5, "e4b": e4b, "e6": e6}[args.exp]()

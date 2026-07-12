@@ -76,7 +76,7 @@ Let $\Lambda_a$ evolve by (A7) with humans continuously at their fast free-entry
 $$\dot\Lambda_a = \Big(\eta \frac{c_h}{\mu_h} - \delta\Big) \Lambda_a \equiv \gamma\,\Lambda_a.$$
 
 **Result 4 (the exclusion criterion).** Define $\gamma = \eta c_h/\mu_h - \delta$.
-- If $\gamma \le 0$: AI capability decays; the system converges to human dominance ($\pi \to 1$). AI cannot bootstrap because human free entry keeps the field congested at $S$, capping AI's margin per unit capability at the human break-even rate $c_h/\mu_h$; if converting that margin into capability ($\eta$) loses to depreciation ($\delta$), AI shrinks.
+- If $\gamma < 0$: AI capability decays; the system converges to human dominance ($\pi \to 1$). (At the knife-edge $\gamma = 0$, $\Lambda_a$ stays frozen and the interior state persists — a non-generic line of neutral fixed points, cf. the blind re-derivation.) AI cannot bootstrap because human free entry keeps the field congested at $S$, capping AI's margin per unit capability at the human break-even rate $c_h/\mu_h$; if converting that margin into capability ($\eta$) loses to depreciation ($\delta$), AI shrinks.
 - If $\gamma > 0$: $\Lambda_a(t) = \Lambda_a(0) e^{\gamma t}$ grows exponentially and crosses $\bar\Lambda$ at the **finite exclusion time**
 
 $$t^* = \frac{1}{\gamma} \ln \frac{\bar\Lambda}{\Lambda_a(0)}.$$
