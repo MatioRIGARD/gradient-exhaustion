@@ -26,7 +26,10 @@
 - ✅ **T3.8** : redistribution (taxe τ→transferts, DEC-002 câblé : la demande reçoit capture+transferts), dissipation de rentes entre opérateurs, drapeau collusion. π_total implémenté.
 - ✅ **E5 et E4b** (prédictions 13/07c pré-enregistrées, toutes confirmées) : la redistribution ne préserve la participation qu'à taux quasi confiscatoire (τ*≈0.92 ; π_total=τ exactement après exclusion) ; la concurrence entre IA ne protège qu'à dissipation quasi totale (ρ*≈0.97) et **la collusion éteint exactement la protection**. Figures F5, F4b.
 - ⚠️ **E6 première passe négative** (pas d'early warnings détectables avec l'estimateur naïf) — documenté, à retravailler, ne pas revendiquer dans le papier.
-- ⬜ Restent : densification n≥30 (cosmétique papier), E3.8, E6 retravaillé, calibration du niveau learning, balayage β×K ; puis phase 5 (papier long, LaTeX, arXiv). Le post AF est prêt et n'attend rien de tout ça.
+- ✅ **Densification faite** (E1/E4 : 30 seeds ; E2/E2b : 10 seeds — figures régénérées et commitées).
+- ✅ **T5.1 + T5.2 (14/07 avant coupure Fable)** : papier long complet (`paper/paper.md`, ~7200 mots, registre arXiv), relu par Fable, passé au référé hostile (`paper/adversarial-review-paper.md` — verdict : publiable, 10 corrections mineures **toutes appliquées**, aucune ne touchait un résultat).
+- ⬜ Restent (aucun ne bloque la publication) : E3.8, E6 retravaillé, calibration du niveau learning, balayage β×K, E7 (juridictions), sensibilité aux frictions ABM, T5.4 (LaTeX : installer pandoc), T5.5 arXiv (après retours sur le post).
+- 👉 **Chemin critique = Mathieu : `docs/checklist-publication.md`** (vérification croisée → relecture post → LessWrong → mails → GitHub).
 
 ---
 
