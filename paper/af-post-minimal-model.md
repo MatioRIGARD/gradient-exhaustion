@@ -71,7 +71,7 @@ A first production pass of the simulation then tested the pre-registered predict
 
 The model *fails* to produce exclusion — by design — in several regimes, and each is an empirical question the eventual paper must target:
 
-- **$\gamma \le 0$**: reinvestment loses to depreciation, AI decays, humans persist. The whole result hangs on one inequality.
+- **$\gamma \le 0$**: reinvestment does not outpace depreciation, AI does not grow, humans persist. The whole result hangs on one inequality.
 - **Early capability saturation.** If reinvestment has diminishing returns and AI capability rests *below* $\bar\Lambda$, there is a genuine coexistence region. Exclusion is not universal even inside the model.
 - **Symmetric human compounding.** If humans compound like AI, the exclusion vanishes and the story becomes "the un-augmented" versus "the augmented," not "humans" versus "AI."
 - **Operator competition (E4).** If AI operators compete their rents away, the effective reinvestment rate falls and coexistence grows — the analogue of free entry, applied to the AI side. The first pass established the null half of this: merely *splitting* capability across many operators changes nothing (exact invariance); everything therefore rides on whether real AI-vs-AI competition dissipates rents — noting the uncomfortable real-world observation that current AI actors reinvest at a loss, funded by capital markets on expected future income, which would bypass rent discipline entirely.
