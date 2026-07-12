@@ -1,6 +1,6 @@
 # Model Notes — The Gradient Capture Race
 
-> **STATUS: DRAFT — UNVERIFIED.** Written 2026-07-13 (T2.1–T2.3). Independent re-derivation of §2 pending (see verification log at bottom). Numeric check: `sim/analysis/analytic_check.py`. Nothing here is settled until the verification log says so.
+> **STATUS: VERIFIED DRAFT (rev. 2, post-review).** Written 2026-07-13 (T2.1–T2.4). Verified four ways — 18 numeric checks, blind independent re-derivation, ABM reproduction (V1 6/6), hostile adversarial review with all required corrections applied (see verification log at bottom). Standing epistemic status: §2-§3 (exclusion) emergent and error-free given declared asymmetries A5/A7/A9; §4 (ratchet) is a sharp consequence of assumption A8, presented as such; top open limitation: partial equilibrium (A10).
 
 ---
 
@@ -27,7 +27,7 @@ $$P(\text{human capture}) = \frac{\Lambda_h}{\Lambda_h + \Lambda_a + \theta}, \q
 
 Stationary income flows: $\kappa_h = g v \frac{\Lambda_h}{\Lambda_h+\Lambda_a+\theta}$, $\kappa_a = g v \frac{\Lambda_a}{\Lambda_h+\Lambda_a+\theta}$.
 
-**Anti-tautology note.** Humans and AI differ only in parameter structure: humans have fixed technology and free entry; AI has compounding technology. **(A7) is the load-bearing empirical asymmetry** — the claim is not that humans cannot improve, but that software detection capability compounds with reinvested income much faster than human capability does. §5 audits this. If (A7) is switched off ($\eta = 0$), or given symmetrically to humans, no exclusion occurs (§2.4, sanity results) — the mechanism, not the labels, drives every result below.
+**Anti-tautology note.** Humans and AI differ only in parameter structure: humans have fixed technology and free entry; AI has compounding technology. **(A7) is the load-bearing empirical asymmetry** — the claim is not that humans cannot improve, but that software detection capability compounds with reinvested income much faster than human capability does. §5 audits this. If (A7) is switched off ($\eta = 0$), or given symmetrically to humans, no exclusion occurs (§2.4, sanity results) — for the *exclusion* results (§2-§3), the mechanism, not the labels, drives the outcome. The *hysteresis* result (§4) is different in kind: it additionally rests on a labeled asymmetry in (A8) — human income feeds demand, AI income does not except through $\beta$ — declared and discussed there.
 
 ---
 
@@ -83,9 +83,9 @@ $$t^* = \frac{1}{\gamma} \ln \frac{\bar\Lambda}{\Lambda_a(0)}.$$
 
 $\pi_{\text{market}}(t) = 1 - \frac{\Lambda_a(0)}{\bar\Lambda} e^{\gamma t}$: slow at first, then accelerating — *gradual, then sudden*.
 
-**Post-exclusion regime** ($\Lambda_a > \bar\Lambda$): $\kappa_a = g v \frac{\Lambda_a}{\Lambda_a + \theta}$ (no human congestion), giving $\dot\Lambda_a = \eta g v \frac{\Lambda_a}{\Lambda_a+\theta} - \delta \Lambda_a$ with stable fixed point $\Lambda_a^{**} = \eta g v/\delta - \theta$. One checks $\Lambda_a^{**} > \bar\Lambda \iff \gamma > 0$: **whenever AI can grow in the human-occupied regime, its resting point lies beyond the exclusion threshold.** With constant $v$, exclusion is an absorbing state as long as parameters don't change.
+**Post-exclusion regime** ($\Lambda_a > \bar\Lambda$): $\kappa_a = g v \frac{\Lambda_a}{\Lambda_a + \theta}$ (no human congestion), giving $\dot\Lambda_a = \eta g v \frac{\Lambda_a}{\Lambda_a+\theta} - \delta \Lambda_a$ with stable fixed point $\Lambda_a^{**} = \eta g v/\delta - \theta$. One checks $\Lambda_a^{**} > \bar\Lambda \iff \gamma > 0$: **whenever AI can grow in the human-occupied regime, its resting point lies beyond the exclusion threshold.** With constant $v$ this makes exclusion absorbing; under the demand feedback of §4 ($v \to v_{\text{lo}} = \beta v_{\text{hi}}$) the fixed point must be recomputed, $\Lambda_a^{**,\text{lo}} = \eta g \beta v_{\text{hi}}/\delta - \theta$, and absorption requires $\Lambda_a^{**,\text{lo}} > \bar\Lambda_{\text{re}} = \beta S_{\text{hi}} - \theta$, i.e. $\eta g v_{\text{hi}}/\delta > S_{\text{hi}}$ — **$\beta$ cancels and the condition is again $\gamma > 0$**: exclusion remains absorbing under demand collapse whenever it can occur at all.
 
-**Result 5 (interpretation).** The whole fate of human participation reduces to one dimensionless comparison: $\eta c_h / \mu_h$ vs $\delta$ — can the AI side convert the margin *that human competition leaves available* into capability faster than it depreciates? Neither malice nor strategy appears anywhere; competition + compounding suffice. (This is the formal version of the "robust agent-agnostic process".)
+**Result 5 (interpretation).** The fate of human participation reduces to one dimensionless comparison: $\eta c_h / \mu_h$ vs $\delta$ — can the AI side convert the margin *that human competition leaves available* into capability faster than it depreciates? No malice or strategy appears; but "competition + compounding" is sufficient only jointly with the model's other structural asymmetries: human free entry retains zero rent (A5) while AI reinvests *gross* income with no zero-profit discipline (A9). These co-requirements are part of the claim, not background. (Under them, this is a formal version of the "robust agent-agnostic process".)
 
 ---
 
@@ -95,17 +95,19 @@ So far $v$ is exogenous. Let opportunity value depend on circulating demand, in 
 
 - **(A8)** A fraction $\beta \in [0,1]$ of demand is *autonomous* (inter-AI or otherwise independent of human income); the rest is fed by human earned income. When humans participate at free-entry scale, $v = v_{\text{hi}}$. When humans are fully excluded ($\kappa_h = 0$), demand shrinks and $v = v_{\text{lo}} = \beta\, v_{\text{hi}}$.
 
+**Declared load-bearing asymmetry of (A8).** Human income feeds demand; AI income does not, except through the fixed autonomous share $\beta$. This labeled asymmetry — not competition, not compounding — is the engine of everything in this section. It is an empirical claim (AI operators reinvest in inputs and compute rather than final consumption; displaced humans stop buying), and it may fail: if AI income recirculates into final demand at scale, $\beta$ is effectively high and the ratchet weakens or vanishes. The results below are therefore *conditional on (A8)*, stated as such.
+
 Each state has its own viability threshold:
 
 $$\bar\Lambda_{\text{exit}} = \frac{g v_{\text{hi}} \mu_h}{c_h} - \theta, \qquad \bar\Lambda_{\text{re}} = \frac{g v_{\text{lo}} \mu_h}{c_h} - \theta = \beta\big(\bar\Lambda_{\text{exit}} + \theta\big) - \theta \;<\; \bar\Lambda_{\text{exit}} \text{ for } \beta < 1.$$
 
-**Result 6 (hysteresis band).** Once $\Lambda_a$ has crossed $\bar\Lambda_{\text{exit}}$ and humans have exited, demand collapses to $v_{\text{lo}}$, and humans do **not** re-enter when $\Lambda_a$ falls back below $\bar\Lambda_{\text{exit}}$ — re-entry requires $\Lambda_a < \bar\Lambda_{\text{re}}$. The width of the trap,
+**Result 6 (hysteresis band — a direct consequence of A8).** Once $\Lambda_a$ has crossed $\bar\Lambda_{\text{exit}}$ and humans have exited, demand collapses to $v_{\text{lo}}$, and humans do **not** re-enter when $\Lambda_a$ falls back below $\bar\Lambda_{\text{exit}}$ — re-entry requires $\Lambda_a < \bar\Lambda_{\text{re}}$. The width of the trap,
 
 $$\bar\Lambda_{\text{exit}} - \bar\Lambda_{\text{re}} = (1-\beta)\big(\bar\Lambda_{\text{exit}} + \theta\big),$$
 
-is controlled by **how human-dependent demand is**. Two readings, both stated in the paper:
+follows algebraically from $v_{\text{lo}} = \beta v_{\text{hi}}$: it is **how the model makes the realization-crisis intuition precise**, not an independent discovery. Its value is in the sharpened readings it forces, both to be stated in the paper:
 - $\beta \to 1$ (fully autonomous demand): no hysteresis — exclusion is reversible in principle, but the economy no longer needs humans at all (the Korinek limit).
-- $\beta < 1$: the more the economy's demand depends on human income, the **more irreversible** exclusion becomes once it happens — the realization crisis is the ratchet. Counterintuitive and, we believe, novel as a formal statement.
+- $\beta < 1$: the more the economy's demand depends on human income, the **more irreversible** exclusion becomes once it happens — the realization crisis is the ratchet, conditional on (A8).
 
 *(If $\bar\Lambda_{\text{re}} \le 0$, i.e. $\beta \le \theta/(\bar\Lambda_{\text{exit}}+\theta)$, re-entry is impossible at any AI capability: the trap is absolute.)*
 
@@ -123,9 +125,11 @@ This gives ABM experiment E3 a sharp analytic prediction: hysteresis loop width 
 | A6 | AI as aggregate intensity | Moderate | Operator competition (E4) may burn income in the race (lower effective $\eta$) or collude (higher) — the ABM question |
 | A7 | AI compounds, humans don't | **THE load-bearing empirical claim** | If humans compound equally ($\eta_h = \eta_a$ symmetric), no exclusion (sanity §2.4). The paper must defend the asymmetry empirically (software scales with capital; human skill acquisition is biologically bounded and non-transferable) and study intermediate $\eta_h > 0$ in the ABM |
 | A7' | Linear reinvestment $\eta \kappa_a$ | **High** | If capability growth saturates before $\bar\Lambda$ (concave $\eta(\cdot)$, rising marginal cost of capability), a **coexistence regime** exists: AI rests below the threshold and humans persist. This is an honest and important region of the phase diagram (F2) — exclusion is *not* universal in the model |
-| A8 | Two-state demand | Simplification | Continuous $v(\kappa_h)$ gives a smooth fold instead of two thresholds; qualitative hysteresis survives (standard bifurcation argument — verify numerically) |
+| A8 | Two-state demand, with the labeled asymmetry declared in §4 (human income feeds demand, AI income only via $\beta$) | **High for §4** (the ratchet is a consequence of A8, cf. Result 6) | Continuous $v(\kappa_h)$: bistability then requires a **loop gain > 1** condition (steep enough demand response over the relevant range), not guaranteed — E3 must map where hysteresis survives, not assume it |
+| A10 | No general equilibrium: $g$ and $v_{\text{hi}}$ exogenous, AI income not recirculated into demand beyond $\beta$, no Schumpeterian regeneration ($g$ rising with AI abundance) | **The top stated limitation** (strongest referee objection) | Endogenizing $g$(AI) or AI final demand could reverse both exclusion and the ratchet; must be an explicit ABM extension (feeds Q1/E-experiments), and until then all results are partial-equilibrium statements |
+| A11 | No ownership channel: humans cannot hold claims on $\Lambda_a$ within the dynamics | Moderate | A human buying AI capability is, in this model, an *operator* (species is a parameter set, so this is representable); passive human claims on AI income are the ρ series of `docs/pi-definition.md` — absent from v1 dynamics, to be reported in the ABM |
 
-**What would falsify the mechanism (K1 check).** The model *fails* to produce exclusion when: $\gamma \le 0$ (reinvestment loses to depreciation), capability growth saturates early (A7′), or humans compound comparably (A7 symmetric). These are exactly the empirical questions the paper's predictions section must target — the model is falsifiable through its parameters, hence **not** a tautology. GATE 2 assessment: the mechanism *emerges* from competition + compounding, with documented sanity checks where it correctly does *not* emerge.
+**What would falsify the mechanism (K1 check).** The model *fails* to produce exclusion when: $\gamma \le 0$ (reinvestment loses to depreciation), capability growth saturates early (A7′), or humans compound comparably (A7 symmetric). These are the empirical questions the paper's predictions section must target. K1 assessment, stated carefully: the **exclusion** results (§2-§3) emerge from competition + compounding *given* the declared structural asymmetries (A5/A7/A9), and the model demonstrably produces non-exclusion in the right regions of parameter space; the **ratchet** result (§4) does not have the same status — it is a sharp consequence of assumption (A8) and must be presented as such. Falsifiability of $\gamma$ does not launder A8; the two claims carry different evidentiary weight and the paper must keep them separate.
 
 ---
 
@@ -148,7 +152,7 @@ This gives ABM experiment E3 a sharp analytic prediction: hysteresis loop width 
 | Numeric ODE check of §3 ($t^*$, post-exclusion fixed point, decay when $\gamma<0$) | ✅ PASS (C4, 5 checks) | 2026-07-13 | idem |
 | Numeric check of §4 (two thresholds, loop width $\propto 1-\beta$) | ✅ PASS (C5, 2 checks) | 2026-07-13 | idem |
 | Independent re-derivation of §2-§3 from §1 alone (fresh agent, no access to these results) | ✅ PASS | 2026-07-13 | `paper/rederivation-blind.md` — **all formulas match symbol for symbol** (threshold, linear π, γ criterion, $t^*$, fixed point, hysteresis width $(1-\beta)S$, permanent-trap condition $\beta < \theta/S$), including the observation that $\Lambda_a^{**} > \bar\Lambda \iff \gamma > 0$. Three substantive flags raised, incorporated as A4′/A9 and the §5 welfare note |
-| Adversarial review of §5 audit | ☐ pending | | fresh session, next day |
+| Adversarial review (hostile referee, fresh agent) | ✅ DONE — verdict: publishable as a short post after corrections | 2026-07-13 | `paper/adversarial-review-model.md`. §2-§3 verified error-free and emergent; §4 flagged as A8-constructed and oversold. **All 7 required corrections applied** in this revision (A8 asymmetry declared, Result 6 downgraded, welfare neutrality, ownership channel A11, Result 5 co-requirements, post-exclusion fixed point under $v_{\text{lo}}$ recomputed — β cancels, condition stays $\gamma>0$ —, K1 wording separated). Top remaining objection: no general equilibrium (now audit row A10) |
 | ABM reproduces §2-§3 (V1 anchor: free-entry level, linear π, exclusion, $t^*$) | ✅ PASS (6/6 tests) | 2026-07-13 | `sim/tests/test_analytic.py`; tolerances 8-35% as stated per test |
 
 **Flags from the blind re-derivation (incorporated):**
