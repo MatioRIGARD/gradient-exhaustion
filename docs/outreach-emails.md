@@ -1,6 +1,18 @@
 # T1.2 — Brouillons de mails (à envoyer par Mathieu)
 
-> Deux mails courts, personnalisés, en anglais. **Avant d'envoyer : publie le post AF (`paper/af-post-minimal-model.md`) et remplace `[AF-POST-LINK]` par son URL** — un lien vers un post public vaut mieux qu'une pièce jointe (et si tu n'as pas encore publié, garde la pièce jointe `docs/pi-definition.en.md` en PDF/gist et supprime la phrase du lien). Envoie tel quel ou ajuste le ton — mais **n'allonge pas** : les chercheurs répondent aux mails courts avec une question précise. Adresses : cherche leurs pages personnelles (Kulveit : ACS Research Prague ; Drago & Laine : Workshop Labs / leurs Substacks acceptent les DM).
+> Deux mails courts, personnalisés, en anglais. **Avant d'envoyer : publie le post AF (`paper/af-post-minimal-model.md`) et remplace `[AF-POST-LINK]` par son URL** — un lien vers un post public vaut mieux qu'une pièce jointe (et si tu n'as pas encore publié, garde la pièce jointe `docs/pi-definition.en.md` en PDF/gist et supprime la phrase du lien). Envoie tel quel ou ajuste le ton — mais **n'allonge pas** : les chercheurs répondent aux mails courts avec une question précise.
+
+## Canaux de contact (recherche du 2026-07-15, aucune adresse nominative publiée trouvée)
+
+| Chercheur | Canal recommandé | Secours | Confiance |
+|---|---|---|---|
+| Jan Kulveit | DM LessWrong : https://www.lesswrong.com/users/jan_kulveit (actif, dernier post juin 2025) | contact@acsresearch.org (générique, via acsresearch.org/contact) | élevée |
+| Luke Drago | contact@workshoplabs.ai (trouvée dans l'annonce de fusion) | X @luke_drago_ ou formulaire commun sur intelligence-curse.ai/about | moyenne |
+| Rudolf Laine | DM LessWrong : https://www.lesswrong.com/users/l-rudolf-l (liste lui-même ses canaux en bio) | Formulaire sur rudolf.website | élevée |
+
+- ⚠️ **Workshop Labs a fusionné avec Thinking Machines le 2026-04-13** (workshoplabs.ai/blog/wsl-joining-tml). Drago et Laine y travaillent désormais : ajuster la mention « Workshop Labs » du Mail 2 (ou ne citer que « The Intelligence Curse »). Pérennité de contact@workshoplabs.ai non garantie.
+- ⚠️ **Ne pas utiliser** `jan.kulveit@philosophy.ox.ac.uk` (vieille page FHI ; l'institut a fermé en 2024, le domaine ne résout plus). L'email du corresponding author sur arXiv 2501.16946 est masqué.
+- Le corps des mails 1 et 2 fonctionne tel quel en DM LessWrong (même longueur, même ask) ; supprimer juste la formule d'objet ou la garder comme première ligne.
 
 ---
 

@@ -3,6 +3,8 @@
 > **On how this was made (disclosure up front).** I'm an electronics and embedded-systems engineer, not an economist or a professional researcher. This write-up, the mathematical derivations, and the simulation code behind it were produced with heavy AI assistance, under my direction, over a few nights. I'm stating that plainly because the site policy asks me to and because it's the honest framing — I'd rather you judge the object than the prose.
 >
 > And there is an object to judge, not just text: a public codebase with a formal model, closed-form results, four independent verification passes (including a blind re-derivation and an agent-based reproduction), and pre-registered simulation predictions — one of which was refuted and is reported as such. The model is small on purpose. I would rather it be attacked than admired, and I genuinely want to know where it breaks. Code and derivations: github.com/MatioRIGARD/gradient-exhaustion
+> 
+> Why I decided to look into this topic: I am strongly convinced that the alignment problem is more of an economic issue than a technical one. I therefore decided to explore how to formalize it in order to better understand it, starting from certain hypotheses I consider likely.
 
 ## The gap
 

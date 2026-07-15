@@ -50,6 +50,7 @@
 3. **Nouvelles niches** : automatisées immédiatement sous AGI. (Prior noté ; reste un paramètre balayé — ne pas encoder.)
 4. **Niches légales** : poids mort, « fonctionnaires de l'IA ». (→ DEC-003.)
 5. **Valeur** : les poids de modèles sont copiables (cf. open source) ; la valeur est dans l'infra, la donnée, les process → les « opérateurs » du modèle sont les industriels couplant capital propriétaire et IA, pas les labs. La couche modèles subit la dissipation de rentes (E4) ; la composition se déplace vers le capital complémentaire.
+   **Précision (discussion 15/07)** : la banalisation des modèles ne fait pas que déplacer la rente, elle fait baisser le *prix* de la capacité, donc monter η chez les déployeurs → la non-rentabilité de la couche modèles peut coexister avec γ > 0 agrégé, voire l'accélérer. Prédiction discriminante à pré-enregistrer côté empirie : marges des vendeurs de modèles → 0 *pendant que* γ mesuré chez les détenteurs de compléments (calcul, data, process) reste positif. Extension candidate v2 : scinder le camp IA en couches (fabricants / déployeurs / détenteurs d'infra) avec dissipation E4 propre à chaque couche.
 6. **Économie machine-machine** : sans objectif programmé, pas de moteur — correction actée en discussion : **la sélection remplace l'intention** (les opérateurs qui réinvestissent survivent). Paradoxe relevé par Mathieu à garder pour la discussion du papier : un opérateur aligné sur la prospérité humaine devrait s'auto-limiter en γ — l'alignement comme retenue économique sous pression concurrentielle.
 
 ---
