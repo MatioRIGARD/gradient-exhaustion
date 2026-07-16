@@ -11,7 +11,7 @@
 ## État d'avancement (2026-07-13, nuit de drive Fable)
 
 - ✅ **Phase 0** complète (T0.1-T0.3, GATE 0 franchie : terrain libre).
-- ✅ **T1.1** (définition de π, DEC-001 tranché) ; **T1.2** : brouillons prêts dans `docs/outreach-emails.md` → **à envoyer par Mathieu**.
+- ✅ **T1.1** (définition de π, DEC-001 tranché) ; ✅ **T1.2** : les 3 messages envoyés le 2026-07-16 (Kulveit, Drago, Laine — style court, cf. `docs/outreach-emails.md`), réponses non bloquantes.
 - ✅ **T2.1-T2.3** : modèle formalisé et résolu (`paper/model-notes.md`) — seuil d'exclusion Λ̄, critère γ, temps t*, hystérésis ∝ (1−β). **Triple vérification** : dérivation + 18 checks numériques (`sim/analysis/analytic_check.py`) + contre-dérivation aveugle par agent indépendant (`paper/rederivation-blind.md`) — concordance totale.
 - 🟡 **T2.4** : premier passage fait (audit A1-A9 dans model-notes §5) ; **reste la relecture adversariale par session fraîche** avant de considérer la phase 2 close.
 - ✅ **T3.1-T3.4** : cœur du simulateur + ancre analytique V1 (6/6 tests). Leçons de conception documentées dans les docstrings (signal d'épaisseur de marché, comptabilité par agent avec patience, réponse symétrique anti-rectification).
